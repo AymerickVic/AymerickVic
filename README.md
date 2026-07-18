@@ -18,7 +18,9 @@
 
 ## À propos
 
-Je travaille sur l'administration système et la sécurité cloud Microsoft : Azure Security, Microsoft Sentinel, KQL, Entra ID, Terraform. Mon homelab tourne sous Ansible et mes tâches Active Directory passent par PowerShell. Dernier projet en date, un peu à part : PlaneAlert, une app macOS écrite en Swift pendant un hackathon.
+Sysadmin et réseau depuis plus de trois ans (114 postes sur 4 sites : GLPI, Intune, Entra ID), en transition vers un poste de Security Engineer, direction Montréal. Côté sécurité, je travaille sur Azure Security, Microsoft Sentinel, Defender XDR, KQL et Terraform, avec un lab SOC complet déployable en Terraform. Certifications en cours : CompTIA A+, puis AZ-500 et SC-200.
+
+Mon homelab tourne sous Ansible et mes tâches Active Directory passent par PowerShell. Dernier projet en date, un peu à part : PlaneAlert, une app macOS écrite en Swift pendant un hackathon.
 
 <div align="center">
 
