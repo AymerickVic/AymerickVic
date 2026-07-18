@@ -1,27 +1,24 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Aymerick%20Victoire&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Sysadmin%20%C2%B7%20Cybers%C3%A9curit%C3%A9%20%C2%B7%20Automatisation&descAlignY=55&descSize=18" width="100%" alt="banner" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Aymerick%20Victoire&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Sysadmin%20%C2%B7%20Cybers%C3%A9curit%C3%A9%20%C2%B7%20Automatisation&descAlignY=55&descSize=18" width="100%" alt="bannière" />
 
-<img src="assets/avatar-animate.svg" width="220" alt="Photo de profil animée" />
+<img src="assets/avatar-animate.svg" width="220" alt="photo de profil" />
 
 <a href="https://github.com/AymerickVic">
-  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=24&pause=1000&center=true&vCenter=true&width=650&lines=Salut%2C+moi+c%27est+Aymerick+%F0%9F%91%8B;Sysadmin+%7C+Cybers%C3%A9curit%C3%A9+%7C+Automatisation;Linux+%C2%B7+Ansible+%C2%B7+PowerShell+%C2%B7+Python;Bienvenue+sur+mon+profil+%F0%9F%9A%80" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=24&pause=1000&center=true&vCenter=true&width=650&lines=Salut%2C+moi+c%27est+Aymerick;Sysadmin+%7C+Cybers%C3%A9curit%C3%A9+%7C+Automatisation;Linux+%C2%B7+Ansible+%C2%B7+PowerShell+%C2%B7+Python" alt="présentation" />
 </a>
 
 <p>
-  <img src="https://komarev.com/ghpvc/?username=AymerickVic&style=for-the-badge&color=blueviolet&label=VISITEURS" alt="Vues du profil" />
+  <img src="https://komarev.com/ghpvc/?username=AymerickVic&style=for-the-badge&color=blueviolet&label=VISITEURS" alt="vues du profil" />
 </p>
 
 </div>
 
 ---
 
-## 👨‍💻 À propos de moi
+## À propos
 
-- 🛡️ **Parcours Security Engineer** — Azure Security, KQL, Microsoft Sentinel, Terraform, Entra ID
-- ⚙️ **J'automatise tout** : Ansible pour mon homelab, PowerShell pour l'AD et Entra ID
-- 🧪 **Lab d'infrastructure** monté comme en entreprise : scripts, playbooks et docs testés en conditions réelles
-- ✈️ **Dernier hackathon** : PlaneAlert, une app macOS en Swift (avion animé en overlay + calendrier Apple)
+Je travaille sur l'administration système et la sécurité cloud Microsoft : Azure Security, Microsoft Sentinel, KQL, Entra ID, Terraform. Mon homelab tourne sous Ansible et mes tâches Active Directory passent par PowerShell. Dernier projet en date, un peu à part : PlaneAlert, une app macOS écrite en Swift pendant un hackathon.
 
 <div align="center">
 
@@ -37,7 +34,7 @@
 
 ---
 
-## 🚀 Mes projets
+## Projets
 
 <div align="center">
 
@@ -55,11 +52,15 @@
   <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=AymerickVic&repo=ansible-homelab&theme=tokyonight&hide_border=true" alt="ansible-homelab" />
 </a>
 
+<a href="https://github.com/AymerickVic/plane-alert">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=AymerickVic&repo=plane-alert&theme=tokyonight&hide_border=true" alt="plane-alert" />
+</a>
+
 </div>
 
 ---
 
-## 🛠️ Ma stack
+## Stack
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=linux,bash,ansible,py,powershell,azure,docker,git,github,githubactions,swift,vscode&perline=12" alt="stack" />
@@ -67,24 +68,24 @@
 
 ---
 
-## 📊 Mes stats GitHub
+## Stats GitHub
 
 <div align="center">
-  <img height="170" src="https://github-readme-stats-sigma-five.vercel.app/api?username=AymerickVic&show_icons=true&theme=tokyonight&include_all_commits=true&hide_border=true" alt="Stats GitHub" />
-  <img height="170" src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=AymerickVic&layout=compact&theme=tokyonight&hide_border=true" alt="Langages les plus utilisés" />
+  <img height="170" src="https://github-readme-stats-sigma-five.vercel.app/api?username=AymerickVic&show_icons=true&theme=tokyonight&include_all_commits=true&hide_border=true" alt="stats GitHub" />
+  <img height="170" src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=AymerickVic&layout=compact&theme=tokyonight&hide_border=true" alt="langages les plus utilisés" />
 </div>
 
 <div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=AymerickVic&theme=tokyonight" alt="Résumé du profil" width="800" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=AymerickVic&theme=tokyonight" alt="résumé du profil" width="800" />
 </div>
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=AymerickVic&theme=tokyo-night&hide_border=true&area=true" alt="Graphe d'activité" />
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=AymerickVic&theme=tokyo-night&hide_border=true&area=true" alt="graphe d'activité" />
 </div>
 
 ---
 
-## 🐍 Le snake qui mange mes contributions
+## Snake
 
 <div align="center">
 
@@ -98,11 +99,13 @@
 
 ---
 
-## 👾 La salle d'arcade
+## Arcade
+
+Six jeux régénérés deux fois par jour à partir de ma grille de contributions.
 
 <div align="center">
 
-### 🟡 Pac-Man
+### Pac-Man
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/pacman-contribution-graph-dark.svg" />
@@ -110,7 +113,7 @@
   <img alt="pacman-contribution-graph" src="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/pacman-contribution-graph.svg" />
 </picture>
 
-### 🧱 Breakout
+### Breakout
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/breakout-contribution-graph-dark.svg" />
@@ -118,7 +121,7 @@
   <img alt="breakout-contribution-graph" src="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/breakout-contribution-graph.svg" />
 </picture>
 
-### 🚀 Galaga
+### Galaga
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/galaga-contribution-graph-dark.svg" />
@@ -126,7 +129,7 @@
   <img alt="galaga-contribution-graph" src="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/galaga-contribution-graph.svg" />
 </picture>
 
-### 🫧 Puzzle Bobble
+### Puzzle Bobble
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/puzzle-bobble-contribution-graph-dark.svg" />
@@ -134,7 +137,7 @@
   <img alt="puzzle-bobble-contribution-graph" src="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/puzzle-bobble-contribution-graph.svg" />
 </picture>
 
-### 💣 Bomberman
+### Bomberman
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/bomberman-contribution-graph-dark.svg" />
@@ -142,7 +145,7 @@
   <img alt="bomberman-contribution-graph" src="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/bomberman-contribution-graph.svg" />
 </picture>
 
-### 💠 Minesweeper
+### Minesweeper
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AymerickVic/AymerickVic/output-arcade/minesweeper-contribution-graph-dark.svg" />
@@ -154,22 +157,20 @@
 
 ---
 
-## 🧊 Mes contributions en 3D
+## Contributions en 3D
 
 <div align="center">
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="profile-3d-contrib/profile-night-rainbow.svg" />
   <source media="(prefers-color-scheme: light)" srcset="profile-3d-contrib/profile-season-animate.svg" />
-  <img alt="Calendrier de contributions en 3D" src="profile-3d-contrib/profile-season-animate.svg" />
+  <img alt="calendrier de contributions en 3D" src="profile-3d-contrib/profile-season-animate.svg" />
 </picture>
 
 </div>
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer" width="100%" alt="footer" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer" width="100%" alt="pied de page" />
 
 </div>
-
-<!-- profil animé -->
