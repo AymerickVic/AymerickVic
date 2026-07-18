@@ -85,6 +85,10 @@ Mon homelab tourne sous Ansible et mes tâches Active Directory passent par Powe
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=AymerickVic&theme=tokyo-night&hide_border=true&area=true" alt="graphe d'activité" />
 </div>
 
+<div align="center">
+  <img src="github-metrics.svg" alt="metrics" width="100%" />
+</div>
+
 ---
 
 ## Snake
