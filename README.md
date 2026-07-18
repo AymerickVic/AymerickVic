@@ -30,7 +30,7 @@
 </div>
 
 <div align="center">
-  <img src="https://streak-stats.demolab.com/?user=AymerickVic&theme=tokyonight&hide_border=true&locale=fr" alt="Série de contributions" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=AymerickVic&theme=tokyonight" alt="Résumé du profil" width="800" />
 </div>
 
 <div align="center">
