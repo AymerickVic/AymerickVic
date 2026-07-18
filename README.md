@@ -16,6 +16,49 @@
 
 ---
 
+## 👨‍💻 À propos de moi
+
+- 🛡️ **Parcours Security Engineer** — Azure Security, KQL, Microsoft Sentinel, Terraform, Entra ID
+- ⚙️ **J'automatise tout** : Ansible pour mon homelab, PowerShell pour l'AD et Entra ID
+- 🧪 **Lab d'infrastructure** monté comme en entreprise : scripts, playbooks et docs testés en conditions réelles
+- ✈️ **Dernier hackathon** : PlaneAlert, une app macOS en Swift (avion animé en overlay + calendrier Apple)
+
+<div align="center">
+
+![Azure](https://img.shields.io/badge/Azure_Security-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![Entra ID](https://img.shields.io/badge/Entra_ID-5E5CE6?style=for-the-badge&logo=microsoft&logoColor=white)
+![Sentinel](https://img.shields.io/badge/Microsoft_Sentinel-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
+![KQL](https://img.shields.io/badge/KQL-2C5898?style=for-the-badge&logo=azuredataexplorer&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=for-the-badge&logo=ansible&logoColor=white)
+![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
+
+</div>
+
+---
+
+## 🚀 Mes projets
+
+<div align="center">
+
+<a href="https://github.com/AymerickVic/soc-quest">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=AymerickVic&repo=soc-quest&theme=tokyonight&hide_border=true" alt="soc-quest" />
+</a>
+<a href="https://github.com/AymerickVic/sysadmin-toolkit">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=AymerickVic&repo=sysadmin-toolkit&theme=tokyonight&hide_border=true" alt="sysadmin-toolkit" />
+</a>
+
+<a href="https://github.com/AymerickVic/entra-bulk-users">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=AymerickVic&repo=entra-bulk-users&theme=tokyonight&hide_border=true" alt="entra-bulk-users" />
+</a>
+<a href="https://github.com/AymerickVic/ansible-homelab">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=AymerickVic&repo=ansible-homelab&theme=tokyonight&hide_border=true" alt="ansible-homelab" />
+</a>
+
+</div>
+
+---
+
 ## 🛠️ Ma stack
 
 <div align="center">
