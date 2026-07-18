@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="260" viewBox="0 0 260 260">
+  <defs>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <clipPath id="clip"><circle cx="130" cy="130" r="88"/></clipPath>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <circle cx="130" cy="130" r="100" fill="url(#ring)" opacity="0.25" filter="url(#blur)">
+    <animate attributeName="opacity" values="0.15;0.4;0.15" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="98;106;98" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <image href="data:image/png;base64,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" x="42" y="42" width="176" height="176" clip-path="url(#clip)"/>
+
+  <circle cx="130" cy="130" r="100" fill="none" stroke="url(#ring)" stroke-width="5" stroke-linecap="round" stroke-dasharray="150 59.4">
+    <animateTransform attributeName="transform" type="rotate" from="0 130 130" to="360 130 130" dur="6s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="130" cy="130" r="112" fill="none" stroke="url(#ring)" stroke-width="2" stroke-linecap="round" stroke-dasharray="8 22" opacity="0.7">
+    <animateTransform attributeName="transform" type="rotate" from="360 130 130" to="0 130 130" dur="12s" repeatCount="indefinite"/>
+  </circle>
+
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="0 130 130" to="360 130 130" dur="6s" repeatCount="indefinite"/>
+    <circle cx="130" cy="30" r="6" fill="#06b6d4"/>
+  </g>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="180 130 130" to="540 130 130" dur="6s" repeatCount="indefinite"/>
+    <circle cx="130" cy="30" r="4" fill="#7c3aed"/>
+  </g>
+</svg>

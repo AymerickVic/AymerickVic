@@ -2,6 +2,8 @@
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Aymerick%20Victoire&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Sysadmin%20%C2%B7%20Cybers%C3%A9curit%C3%A9%20%C2%B7%20Automatisation&descAlignY=55&descSize=18" width="100%" alt="banner" />
 
+<img src="assets/avatar-animate.svg" width="220" alt="Photo de profil animée" />
+
 <a href="https://github.com/AymerickVic">
   <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=24&pause=1000&center=true&vCenter=true&width=650&lines=Salut%2C+moi+c%27est+Aymerick+%F0%9F%91%8B;Sysadmin+%7C+Cybers%C3%A9curit%C3%A9+%7C+Automatisation;Linux+%C2%B7+Ansible+%C2%B7+PowerShell+%C2%B7+Python;Bienvenue+sur+mon+profil+%F0%9F%9A%80" alt="Typing SVG" />
 </a>
