@@ -51,7 +51,7 @@ Certifications : SC-300 (Identity &amp; Access Administrator) le 17 septembre 20
 ## Activité
 
 <div align="center">
-  <img src="github-metrics.svg" alt="metrics" width="100%" />
+  <img src="profile-3d-contrib/profile-night-rainbow.svg" alt="calendrier de contributions en 3D" width="100%" />
 </div>
 
 <div align="center">
