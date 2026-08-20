@@ -1,11 +1,6 @@
 <div align="center">
 
-<img src="assets/avatar-animate.svg" width="180" alt="photo de profil" />
-
-# Aymerick Victoire
-
-**Sysadmin &amp; Réseau → Security Engineer**
-Azure Security · Microsoft Sentinel · Automatisation · Montréal
+<img src="assets/terminal-header.svg" width="820" alt="Aymerick Victoire — Sysadmin vers Security Engineer" />
 
 </div>
 
@@ -43,13 +38,13 @@ Certifications : SC-300 (Identity &amp; Access Administrator) le 17 septembre 20
 
 ## Projets
 
-| Projet | Description |
-| --- | --- |
-| [soc-quest](https://github.com/AymerickVic/soc-quest) | Parcours Security Engineer — Azure Security, KQL, Sentinel, Terraform, Entra ID |
-| [sysadmin-toolkit](https://github.com/AymerickVic/sysadmin-toolkit) | Scripts PowerShell AD, playbooks Ansible et docs infra issus d'un lab réel |
-| [entra-bulk-users](https://github.com/AymerickVic/entra-bulk-users) | Création en masse d'utilisateurs Entra ID depuis un CSV via Microsoft Graph |
-| [ansible-homelab](https://github.com/AymerickVic/ansible-homelab) | Playbooks Ansible pour la gestion automatisée d'un homelab |
-| [plane-alert](https://github.com/AymerickVic/plane-alert) | App macOS (Swift, EventKit) : une banderole passe 5 min avant chaque événement Calendrier |
+| Projet | Description | Stack |
+| --- | --- | --- |
+| [soc-quest](https://github.com/AymerickVic/soc-quest) | Parcours Security Engineer — Azure Security, KQL, Sentinel, Terraform, Entra ID | ![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?logo=powershell&logoColor=white) |
+| [sysadmin-toolkit](https://github.com/AymerickVic/sysadmin-toolkit) | Scripts PowerShell AD, playbooks Ansible et docs infra issus d'un lab réel | ![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?logo=powershell&logoColor=white) ![Ansible](https://img.shields.io/badge/-Ansible-EE0000?logo=ansible&logoColor=white) |
+| [entra-bulk-users](https://github.com/AymerickVic/entra-bulk-users) | Création en masse d'utilisateurs Entra ID depuis un CSV via Microsoft Graph | ![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?logo=powershell&logoColor=white) |
+| [ansible-homelab](https://github.com/AymerickVic/ansible-homelab) | Playbooks Ansible pour la gestion automatisée d'un homelab | ![Ansible](https://img.shields.io/badge/-Ansible-EE0000?logo=ansible&logoColor=white) |
+| [plane-alert](https://github.com/AymerickVic/plane-alert) | App macOS : une banderole passe 5 min avant chaque événement Calendrier | ![Swift](https://img.shields.io/badge/-Swift-F05138?logo=swift&logoColor=white) |
 
 ---
 
