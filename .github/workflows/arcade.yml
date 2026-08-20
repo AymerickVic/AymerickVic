@@ -1,10 +1,8 @@
+# Désactivé : les jeux d'arcade ne sont plus affichés dans le README.
+# Exécution manuelle uniquement (Actions > Run workflow) si besoin de les régénérer.
 name: Generate Arcade Games
 on:
-  schedule:
-    - cron: "0 */12 * * *"
   workflow_dispatch: {}
-  push:
-    branches: [main]
 permissions:
   contents: write
 jobs:
