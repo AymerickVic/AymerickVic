@@ -1,7 +1,7 @@
+# Désactivé : la carte metrics (thème clair) n'est plus affichée dans le README,
+# remplacée par le calendrier 3D sombre. Exécution manuelle uniquement si besoin.
 name: Metrics
 on:
-  schedule:
-    - cron: "0 5 * * *"
   workflow_dispatch: {}
 permissions:
   contents: write
