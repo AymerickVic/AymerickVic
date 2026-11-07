@@ -26,3 +26,5 @@ _Dernière mise à jour : 2026-11-07_
 ## Notes
 - 4 pièces Xu Wu → bonus de set Xu Wu's Vigor (steak bien cuit).
 - **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, rareté 4, 204 attaque, Dragon 90, -10 % affinité) : matériaux possédés, mais verrouillé car c'est une **amélioration de l'arc du Doshaguma** (Dosha Fearbringer, branche Os ; niveau I selon GamerGuides, III selon Fandom → suivre la ligne en pointillés en jeu). (Zoh Shia battu ; forgé ou non : à confirmer.)
+- Gypceros HR : quête annexe « Beware the Gypceros » (Zatoh, Plaines venteuses) après « Nouveaux écosystèmes ».
+- **Veut garder le look Xu Wu** → apparence superposée = forger les pièces Xu Wu α/β (HR). Chapitre exact de Xu Wu HR non confirmé.
