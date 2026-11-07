@@ -61,6 +61,8 @@ dépassée. Améliorer juste assez pour finir Zoh Shia.
 
 **LR (avant Zoh Shia)**
 - Arc feu Albirath (Rathalos Gardien), arc glace Windbrace (Hirabami).
+- **Arcum Arkveld Gardien** : arc LR de l'Arkveld Gardien (≠ Veldian Arcum HR).
+  Probablement Dragon → idéal contre Zoh Shia.
 - Set Xu Wu 4 pièces → bonus **Xu Wu's Vigor** : bonus d'attaque temporaire
   après avoir mangé un **steak bien cuit** au barbecue portatif. Penser à
   griller avant les gros combats.

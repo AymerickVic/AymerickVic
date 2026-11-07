@@ -23,4 +23,4 @@ _Dernière mise à jour : 2026-11-07_
 
 ## Notes
 - 4 pièces Xu Wu → bonus de set Xu Wu's Vigor (steak bien cuit).
-- Aucun arc Dragon pour Zoh Shia : l'arc feu fait l'affaire (pas de résistance marquée).
+- **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, icône violette = probablement Dragon) : matériaux possédés (Écaille/Pelage/Sang Gardien, Os Gardien solide), mais affiché « ne peut pas encore être forgée » (cadenas). Cible n°1 pour Zoh Shia dès qu'il est débloqué.
