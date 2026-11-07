@@ -5,9 +5,9 @@ _Dernière mise à jour : 2026-11-07_
 ## Situation
 - Plateforme : PS5, jeu en français.
 - Arme : **Arc**.
-- Rang de chasseur : **HR 7**.
-- Dernier boss battu : **Arkveld Gardien** (chapitre 3-4, rang inférieur).
-- Prochaine étape : **Zoh Shia** (3-5, fin du rang inférieur), puis rang supérieur.
+- Rang de chasseur : **HR 8** (attendu après Zoh Shia).
+- Dernier boss battu : **Zoh Shia** (3-5) → rang inférieur terminé.
+- Prochaine étape : **rang supérieur (chapitre 4)**, construire un set de transition α/β.
 
 ## Équipement (capture du 2026-11-07)
 | Emplacement | Pièce | Remarque |
@@ -24,4 +24,4 @@ _Dernière mise à jour : 2026-11-07_
 
 ## Notes
 - 4 pièces Xu Wu → bonus de set Xu Wu's Vigor (steak bien cuit).
-- **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, rareté 4, 204 attaque, Dragon 90, -10 % affinité) : matériaux possédés, mais verrouillé car c'est une **amélioration de l'arc du Doshaguma** (Dosha Fearbringer, branche Os ; niveau I selon GamerGuides, III selon Fandom → suivre la ligne en pointillés en jeu). Cible n°1 pour Zoh Shia dès qu'il est débloqué.
+- **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, rareté 4, 204 attaque, Dragon 90, -10 % affinité) : matériaux possédés, mais verrouillé car c'est une **amélioration de l'arc du Doshaguma** (Dosha Fearbringer, branche Os ; niveau I selon GamerGuides, III selon Fandom → suivre la ligne en pointillés en jeu). (Zoh Shia battu ; forgé ou non : à confirmer.)
