@@ -7,7 +7,8 @@ _Dernière mise à jour : 2026-11-07_
 - Arme : **Arc**.
 - Rang de chasseur : **HR 8** (attendu après Zoh Shia).
 - Dernier boss battu : **Zoh Shia** (3-5) → rang inférieur terminé.
-- Prochaine étape : **rang supérieur (chapitre 4)**, construire un set de transition α/β.
+- Mission en cours : **Nouveaux écosystèmes** (ch.4, capture Yian Kut-Ku). Paliers : Chasing Change HR 15, Touring History HR 20.
+- Objectif build : transition HR → Yian Kut-Ku α (Constitution) + Gypceros (Stamina Surge), puis set Icy Veins HR 9-35 (Prominence Bow I + G. Ebony/G. Doshaguma/G. Rathalos β).
 
 ## Équipement (capture du 2026-11-07)
 | Emplacement | Pièce | Remarque |
