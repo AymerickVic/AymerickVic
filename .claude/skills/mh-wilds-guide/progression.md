@@ -5,6 +5,7 @@ _Dernière mise à jour : 2026-11-07_
 ## Situation
 - Plateforme : PS5, jeu en français.
 - Arme : **Arc**.
+- Rang de chasseur : **HR 7**.
 - Dernier boss battu : **Arkveld Gardien** (chapitre 3-4, rang inférieur).
 - Prochaine étape : **Zoh Shia** (3-5, fin du rang inférieur), puis rang supérieur.
 
