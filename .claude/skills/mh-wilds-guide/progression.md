@@ -23,4 +23,4 @@ _Dernière mise à jour : 2026-11-07_
 
 ## Notes
 - 4 pièces Xu Wu → bonus de set Xu Wu's Vigor (steak bien cuit).
-- **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, icône violette = probablement Dragon) : matériaux possédés (Écaille/Pelage/Sang Gardien, Os Gardien solide), mais affiché « ne peut pas encore être forgée » (cadenas). Cible n°1 pour Zoh Shia dès qu'il est débloqué.
+- **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, rareté 4, 204 attaque, Dragon 90, -10 % affinité) : matériaux possédés, mais verrouillé car c'est une **amélioration de l'arc du Doshaguma** (Dosha Fearbringer, branche Os ; niveau I selon GamerGuides, III selon Fandom → suivre la ligne en pointillés en jeu). Cible n°1 pour Zoh Shia dès qu'il est débloqué.
