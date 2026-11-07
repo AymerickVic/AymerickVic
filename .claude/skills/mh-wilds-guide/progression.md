@@ -7,7 +7,7 @@ _Dernière mise à jour : 2026-11-07_
 - Arme : **Arc**.
 - Rang de chasseur : **HR 8** (attendu après Zoh Shia).
 - Dernier boss battu : **Zoh Shia** (3-5) → rang inférieur terminé.
-- Mission en cours : **Nouveaux écosystèmes** (ch.4, capture Yian Kut-Ku). Paliers : Chasing Change HR 15, Touring History HR 20.
+- **Yian Kut-Ku HR capturé** (Nouveaux écosystèmes terminé). Prochain : forger Kut-Ku α casque (Constitution 2) / bras (Constitution 1) / jambes (Constitution 2), puis quête Gypceros. Paliers : Chasing Change HR 15, Touring History HR 20.
 - Objectif build : transition HR → Yian Kut-Ku α (Constitution) + Gypceros (Stamina Surge), puis set Icy Veins HR 9-35 (Prominence Bow I + G. Ebony/G. Doshaguma/G. Rathalos β).
 
 ## Équipement (capture du 2026-11-07)
