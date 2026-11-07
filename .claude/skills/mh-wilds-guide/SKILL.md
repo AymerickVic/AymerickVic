@@ -10,6 +10,8 @@ actionnable : quoi faire maintenant, quoi crafter, quoi ignorer.
 
 **Règles de style (demandées par Aymerick) :**
 - **Concis.** Pas de blabla.
+- **Lisible :** phrases courtes, peu de puces imbriquées, pas de gras partout,
+  une idée par ligne, sources en une seule ligne à la fin.
 - **Toujours expliquer ce que fait chaque talent / objet / mécanique cité**, en une
   ligne (effet concret + valeur si connue), jamais juste le nom.
 - **Zéro erreur :** si une info manque, la chercher (web) avant de répondre ;
