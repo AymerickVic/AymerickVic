@@ -29,4 +29,10 @@ _Dernière mise à jour : 2026-11-07_
 - **Arcum Arkveld Gardien** (arc Arkveld Gardien, rang inférieur, rareté 4, 204 attaque, Dragon 90, -10 % affinité) : matériaux possédés, mais verrouillé car c'est une **amélioration de l'arc du Doshaguma** (Dosha Fearbringer, branche Os ; niveau I selon GamerGuides, III selon Fandom → suivre la ligne en pointillés en jeu). (Zoh Shia battu ; forgé ou non : à confirmer.)
 - Gypceros HR : quête annexe « Beware the Gypceros » (Zatoh, Plaines venteuses) après « Nouveaux écosystèmes ».
 - **Veut garder le look Xu Wu** → apparence superposée = forger les pièces Xu Wu α/β (HR). Chapitre exact de Xu Wu HR non confirmé.
-- Plan Glaive insecte HR 10-35 (Icy Veins) : Barina Perche III/IV (Lala Barina, paralysie) + set G. Rathalos (taille/jambes Rathalos). Kinsect : rapide en début (Gullshad/Windchopper), viser Arkmaiden (contondant, explosion, bonus récolte) plus tard.
+- **Roadmap Glaive vérifiée (Game8, v1.041/1.042, lue en entier)** : https://claude.ai/artifact/2AKkGWhoJyK7H8cwMzCPmR
+  - Kinsect : Mauldrone → Ladytarge (3 Os solides, 2 Fluides, 1 Floret Lala Barina, 500 z) → **Arkmaiden** (2 Sacs infernaux, 2 Bouillons, 3 Os de qualité, 3 000 z) — dispo dès le rang sup.
+  - HR 9-20 : Princess Regalia I (Rathian, poison) + Lala Barina β tête, Rathian α torse/jambes, Kut-Ku α bras, Kut-Ku β taille, Foray I.
+  - HR 21-35 : Artian Glaive I (affinité) + Fulgur G. β tête, Blango β torse/jambes, Rathalos β bras, Ajarakan β taille, Fitness III.
+  - HR 36+ : Diprielcha ×2 même élément + Gore β tête/jambes, Arkveld β torse/taille, Arkveld G. β bras, Challenger II.
+  - Final (HR 100+) : Limbo Llor (focus Élément, Gore Magala's Tyranny + Lord's Soul) + Arkvulcan γ tête/jambes, Fulgur G. β torse transcendé, Gogmazios α bras, Gore β taille, Challenger III.
+- Accès réseau : environnement « Recherche guides jeux (MH Wilds) » autorise game8.co, kiranico, etc.
