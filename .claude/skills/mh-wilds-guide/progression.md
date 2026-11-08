@@ -4,7 +4,7 @@ _Dernière mise à jour : 2026-11-07_
 
 ## Situation
 - Plateforme : PS5, jeu en français.
-- Arme : **Arc**, en transition vers le **Glaive insecte** (trouve l'arc répétitif).
+- Arme : **Arc** (a testé l'idée du Glaive insecte, puis est revenu à l'Arc).
 - Joue sur **GeForce Now** avec une manette FUNLAB Luminex (palettes XR/XL programmables via MR/ML), icônes PS5.
 - Rang de chasseur : **HR 8** (attendu après Zoh Shia).
 - Dernier boss battu : **Zoh Shia** (3-5) → rang inférieur terminé.
@@ -36,3 +36,10 @@ _Dernière mise à jour : 2026-11-07_
   - HR 36+ : Diprielcha ×2 même élément + Gore β tête/jambes, Arkveld β torse/taille, Arkveld G. β bras, Challenger II.
   - Final (HR 100+) : Limbo Llor (focus Élément, Gore Magala's Tyranny + Lord's Soul) + Arkvulcan γ tête/jambes, Fulgur G. β torse transcendé, Gogmazios α bras, Gore β taille, Challenger III.
 - Accès réseau : environnement « Recherche guides jeux (MH Wilds) » autorise game8.co, kiranico, etc.
+
+## Roadmap ARC (active) — vérifiée Game8/Kiranico, v1.042
+Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive : https://claude.ai/artifact/2AKkGWhoJyK7H8cwMzCPmR)
+- Phase 1 (HR 9-20) : Kut-Ku Stave I (feu 230, fiole Perçante) + Windbrace Bow II (glace, Puissance). Armure : Kut-Ku β tête, Nerscylla α torse, Talioth α bras, Gypceros β taille, Conga β jambes, Fitness I. Constitution 5 + Stamina Surge 3.
+- Phase 2 (HR 21-40) : Artian Sight I (élément + Affinité ×3) + Ebony G. β tête, Rathalos G. β torse/jambes, Ebony G. α bras, Rathalos G. α taille, Fitness III.
+- Phase 3 (HR 40-100) : Angelbein « Affinité » + Gore β tête/taille/jambes, Arkveld β torse, Arkveld G. β bras, Surge III (matériaux Xu Wu HR). Préparer 2 Angelbein « Attaque » même élément.
+- Final (HR 100+) : Calamitous Angel (focus Élément → Perçante ; Gore Magala's Tyranny + Lord's Soul) + Udra γ tête/torse (AT Nu Udra « Be Cursed, Ye Shadowy Flame »), Gore β bras/taille/jambes, Challenger II.
