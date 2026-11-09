@@ -1,2 +1,5 @@
 target/
 *.tmp
+dist/
+web/trame.wasm
+web/sample.pcapng
