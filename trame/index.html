@@ -1,0 +1,879 @@
+<title>Trame</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+<style>
+/* Layout: an analyst's workbench. Conversations rail | network map over a time trace | inspector.
+   Panels are split by hairlines, not cards. Protocol colours follow the T568B cable pairs. */
+:root{
+  --bg:#E6E9ED; --panel:#F6F7F9; --sunk:#DCE1E7; --hover:#ECEFF2;
+  --ink:#111920; --ink2:#43505C; --ink3:#76818D; --rule:#C8CFD7; --zone:#EEF1F4;
+  --p-tls:#1E5DA6; --p-dns:#2A7746; --p-smb:#7A4C2B; --p-tcp:#CC5B0B; --p-arp:#89929C;
+  --crit:#B42318; --crit-bg:#F7E1DD; --warn:#94590A; --warn-bg:#F3E7D2;
+  --m-ink:var(--ink); --m-crit:var(--crit); --m-warn:var(--warn); --m-mut:var(--ink3);
+  --f-ui:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1317; --panel:#151B20; --sunk:#202931; --hover:#1A2128;
+  --ink:#E4E8EB; --ink2:#AAB4BD; --ink3:#77838E; --rule:#2A343D; --zone:#121820;
+  --p-tls:#6EA2E4; --p-dns:#5FBC83; --p-smb:#C38E66; --p-tcp:#EF8A3F; --p-arp:#8C97A2;
+  --crit:#F0766B; --crit-bg:#3A1C1A; --warn:#E0A94A; --warn-bg:#33281A;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1317; --panel:#151B20; --sunk:#202931; --hover:#1A2128;
+  --ink:#E4E8EB; --ink2:#AAB4BD; --ink3:#77838E; --rule:#2A343D; --zone:#121820;
+  --p-tls:#6EA2E4; --p-dns:#5FBC83; --p-smb:#C38E66; --p-tcp:#EF8A3F; --p-arp:#8C97A2;
+  --crit:#F0766B; --crit-bg:#3A1C1A; --warn:#E0A94A; --warn-bg:#33281A;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,input:focus-visible,.ev:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+.app{display:grid;grid-template-rows:auto minmax(0,1fr);height:100%}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:var(--panel);border-bottom:1px solid var(--rule);
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-size:21px;font-weight:700;font-stretch:78%;letter-spacing:-.01em}
+.file{display:flex;flex-direction:column;gap:1px;min-width:0}
+.file .name{font-family:var(--f-mono);font-size:12.5px}
+.file .meta{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.tag{font-size:10.5px;font-stretch:85%;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);border:1px solid var(--rule);padding:1px 6px;border-radius:2px;white-space:nowrap}
+.spacer{flex:1}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--rule);background:var(--bg);border-radius:3px;padding:0 10px;height:32px;min-width:0;flex:0 1 320px}
+.search input{border:0;background:none;outline:none;font:inherit;font-size:13px;color:var(--ink);width:100%;min-width:0}
+.search input::placeholder{color:var(--ink3)}
+.mode{display:flex;border:1px solid var(--ink);border-radius:3px;overflow:hidden;flex:none}
+.mode button{padding:5px 12px;font-size:13px;font-weight:500}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+
+/* ---------- workbench ---------- */
+.work{display:grid;grid-template-columns:290px minmax(0,1fr) minmax(360px,410px);min-height:0}
+.rail,.insp{background:var(--panel);overflow:auto;min-height:0}
+.rail{border-right:1px solid var(--rule)}
+.insp{border-left:1px solid var(--rule)}
+.center{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0;min-width:0}
+
+.sec{padding:14px 16px;border-bottom:1px solid var(--rule)}
+.sec:last-child{border-bottom:0}
+.h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 10px;font-size:11px;font-weight:600;font-stretch:85%;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3)}
+.h .n{font-family:var(--f-mono);letter-spacing:0;text-transform:none;font-weight:400}
+
+/* findings */
+.find{display:grid;grid-template-columns:14px minmax(0,1fr);gap:2px 8px;width:100%;text-align:left;padding:7px 8px;margin:0 -8px;border-radius:3px;width:calc(100% + 16px)}
+.find:hover{background:var(--hover)}
+.find .g{grid-row:span 2;padding-top:3px}
+.find .t{font-weight:600;font-size:13.5px}
+.find .s{font-size:12px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.find[aria-current="true"]{background:var(--sunk)}
+
+/* chips */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{font-size:12px;padding:3px 9px;border:1px solid var(--rule);border-radius:2px;color:var(--ink2)}
+.chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:var(--bg)}
+
+/* conversation rows */
+.conv{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:2px 10px;align-items:center;width:calc(100% + 16px);margin:0 -8px;padding:8px;border-radius:3px;text-align:left}
+.conv:hover{background:var(--hover)}
+.conv[aria-current="true"]{background:var(--sunk)}
+.conv .main{min-width:0;display:flex;flex-direction:column}
+.conv .t,.conv .s{display:block}
+.conv .t{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv .s{font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv .r{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.conv .b{font-family:var(--f-mono);font-size:11.5px;color:var(--ink2)}
+.conv .glyph{display:inline-block;vertical-align:-1px;margin-right:4px}
+.spark{display:block}
+.empty{font-size:13px;color:var(--ink3);padding:6px 0}
+
+/* cable swatch */
+.wire{display:block;width:18px;height:6px;border-radius:3px;background:var(--c)}
+.wire.striped{background:repeating-linear-gradient(90deg,var(--c) 0 4px,var(--panel) 4px 7px);box-shadow:inset 0 0 0 1px var(--c)}
+
+/* ---------- map ---------- */
+.map{position:relative;min-height:0;display:flex;flex-direction:column}
+.map svg{flex:1;width:100%;min-height:260px;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:8px 16px 10px;font-size:12px;color:var(--ink2);border-top:1px solid var(--rule);background:var(--bg)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend em{font-style:normal;color:var(--ink3)}
+.zone{fill:var(--zone);stroke:var(--rule)}
+.zlabel{font:600 11px var(--f-ui);font-stretch:85%;letter-spacing:.09em;fill:var(--ink3)}
+.zsub{font:400 11px var(--f-mono);fill:var(--ink3)}
+.edge{fill:none;stroke-linecap:round;transition:opacity .25s,stroke-width .2s}
+.edge.dim{opacity:.32}
+.edge.idle{opacity:.12}
+.edge.off{opacity:.06}
+.halo{fill:none;stroke:var(--ink);stroke-linecap:round;opacity:0;transition:opacity .2s}
+.halo.on{opacity:.18}
+.hit{fill:none;stroke:transparent;stroke-width:16;cursor:pointer}
+.node circle,.node rect{fill:var(--panel);stroke:var(--ink);stroke-width:1.5}
+.node.me circle.core{fill:var(--ink)}
+.node{cursor:pointer}
+.node:hover circle,.node:hover rect{stroke-width:2.5}
+.nl{font:600 12.5px var(--f-ui);fill:var(--ink)}
+.ns{font:400 10.5px var(--f-mono);fill:var(--ink3)}
+.dot{pointer-events:none}
+
+/* ---------- trace ---------- */
+.trace{background:var(--panel);border-top:1px solid var(--rule);padding:10px 16px 12px}
+.trace-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.trace-h .h{margin:0}
+.play{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid var(--ink);border-radius:50%}
+.play svg{fill:var(--ink)}
+.clock{font-family:var(--f-mono);font-size:12.5px;min-width:9ch}
+.reset{font-size:12px;color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
+.plot{position:relative;height:92px;touch-action:none;cursor:crosshair;user-select:none}
+.plot svg.bars{position:absolute;inset:0 0 18px 0;width:100%;height:calc(100% - 18px)}
+.axis{position:absolute;left:0;right:0;bottom:0;height:16px;border-top:1px solid var(--rule)}
+.axis span{position:absolute;top:2px;transform:translateX(-50%);font:400 10.5px var(--f-mono);color:var(--ink3)}
+.axis span{white-space:nowrap}
+.axis span:first-child{transform:none}
+.axis span:last-child{transform:translateX(-100%)}
+.mk{position:absolute;top:-2px;transform:translateX(-50%);width:16px;height:14px;display:flex;align-items:center;justify-content:center}
+.head{position:absolute;top:-4px;bottom:16px;width:0;border-left:1.5px solid var(--ink);pointer-events:none}
+.head::before{content:"";position:absolute;top:-3px;left:-5.5px;width:9px;height:9px;background:var(--ink);transform:rotate(45deg)}
+.loss-band{position:absolute;top:0;bottom:18px;background:var(--warn-bg);opacity:.75;pointer-events:none}
+
+/* ---------- inspector ---------- */
+.ih{padding:16px;border-bottom:1px solid var(--rule)}
+.ih .eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.ih h2{font-size:21px;line-height:1.2;font-weight:650;font-stretch:88%;margin:0 0 4px;text-wrap:balance;letter-spacing:-.005em}
+.ih .ends{font-family:var(--f-mono);font-size:12px;color:var(--ink2);overflow-wrap:anywhere}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 8px 2px 6px;border-radius:2px}
+.pill.ok{color:var(--ink2);box-shadow:inset 0 0 0 1px var(--rule)}
+.pill.warn{color:var(--warn);background:var(--warn-bg)}
+.pill.crit{color:var(--crit);background:var(--crit-bg)}
+.proto{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--rule)}
+.stats div{padding:10px 16px 12px;border-right:1px solid var(--rule)}
+.stats div:last-child{border-right:0}
+.stats dt{font-size:11px;color:var(--ink3);font-stretch:88%;text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.stats dd{margin:2px 0 0;font-family:var(--f-mono);font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.prose{margin:0;font-size:14px;line-height:1.55;color:var(--ink);max-width:62ch}
+.todo{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.todo li{display:grid;grid-template-columns:18px minmax(0,1fr);font-size:13.5px;color:var(--ink2)}
+.todo li::before{content:"→";color:var(--ink3);font-family:var(--f-mono)}
+.subh{font-size:12px;font-weight:600;color:var(--ink);margin:14px 0 0}
+
+.seqwrap{overflow-x:auto}
+svg.seq{display:block;width:100%;min-width:330px}
+.lane-h{font:600 12px var(--f-ui);fill:var(--ink)}
+.lane-s{font:400 10.5px var(--f-mono);fill:var(--ink3)}
+.lane{stroke:var(--rule);stroke-width:1}
+.ev{cursor:pointer;outline:none}
+.ev .bg{fill:transparent}
+.ev:hover .bg{fill:var(--hover)}
+.ev.on .bg{fill:var(--sunk)}
+.ev .dt{font:400 10.5px var(--f-mono);fill:var(--ink3)}
+.ev .lb{font:500 12px var(--f-ui);fill:var(--ink)}
+.ev .lb.m{font:400 11.5px var(--f-mono)}
+.ev .tt{font:400 10px var(--f-mono);fill:var(--ink3)}
+.ev .gap{font:400 11.5px var(--f-ui);fill:var(--ink3)}
+
+.layers{display:flex;flex-wrap:wrap;gap:0;margin:12px 0 0;font-size:12px}
+.layers span{display:flex;flex-direction:column;padding:5px 9px;border:1px solid var(--rule);margin:0 -1px -1px 0;background:var(--bg)}
+.layers span b{font-weight:600;font-size:12px}
+.layers span i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;color:var(--ink3)}
+.layers span.top{background:var(--panel);border-color:var(--ink)}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.facts span{font-size:12.5px;padding:3px 8px;background:var(--bg);border:1px solid var(--rule);border-radius:2px}
+.facts span em{font-style:normal;color:var(--ink3)}
+
+.bitbox{overflow-x:auto;margin-top:12px}
+.ruler,.bits{display:grid;grid-template-columns:repeat(32,minmax(10px,1fr));min-width:340px}
+.ruler span{font:400 9.5px var(--f-mono);color:var(--ink3);height:14px;border-left:1px solid transparent}
+.ruler span.k{border-left-color:var(--rule)}
+.bits{border-top:1px solid var(--ink);border-left:1px solid var(--rule)}
+.bits div{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:3px 4px 4px;min-width:0;display:flex;flex-direction:column;justify-content:center;background:var(--panel)}
+.bits div small{font-size:9.5px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-stretch:85%}
+.bits div span{font:500 11.5px var(--f-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bits div.flag{padding:3px 0;align-items:center}
+.bits div.flag small{font-family:var(--f-mono);font-stretch:100%}
+.bits div.flag.on{background:var(--ink)}
+.bits div.flag.on small,.bits div.flag.on span{color:var(--panel)}
+.bitnote{font-size:11.5px;color:var(--ink3);margin-top:6px}
+dl.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;margin:12px 0 0;font-size:13px}
+dl.kv dt{color:var(--ink3)}
+dl.kv dd{margin:0;font-family:var(--f-mono);font-size:12.5px;overflow-wrap:anywhere}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .work{grid-template-columns:270px minmax(0,1fr)}
+  .insp{grid-column:1 / -1;border-left:0;border-top:1px solid var(--rule);overflow:visible}
+  .app{height:auto}
+  .rail{overflow:visible}
+  .map svg{min-height:380px}
+}
+@media (max-width:760px){
+  .work{grid-template-columns:minmax(0,1fr)}
+  .rail{border-right:0;border-bottom:1px solid var(--rule)}
+  .map svg{min-height:0;aspect-ratio:800/440;flex:none}
+  .ns{display:none}
+  .nl{font-size:17px}
+  .zlabel{font-size:16px}.zsub{display:none}
+  .search{order:5;flex:1 1 100%}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats div:nth-child(2){border-right:0}
+  .stats div:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+}
+@media (prefers-reduced-motion:reduce){.edge,.halo{transition:none}}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true">
+        <rect x="0" y="3" width="7" height="8" style="fill:var(--ink3)"/>
+        <rect x="8" y="3" width="5" height="8" style="fill:var(--ink)"/>
+        <rect x="14" y="3" width="5" height="8" style="fill:var(--ink)"/>
+        <rect x="20" y="3" width="2" height="8" style="fill:var(--ink2)"/>
+        <rect x="23" y="1" width="8" height="12" style="fill:none;stroke:var(--ink);stroke-width:1.3"/>
+        <rect x="32" y="3" width="2" height="8" style="fill:var(--ink3)"/>
+      </svg>
+      <b>trame</b>
+    </div>
+    <div class="file">
+      <span class="name">bureau-lundi.pcapng</span>
+      <span class="meta" id="meta"></span>
+    </div>
+    <span class="tag">Capture d'exemple</span>
+    <div class="spacer"></div>
+    <label class="search" for="q">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="6" cy="6" r="4.5" style="fill:none;stroke:var(--ink3);stroke-width:1.5"/><path d="M9.5 9.5 13 13" style="stroke:var(--ink3);stroke-width:1.5"/></svg>
+      <input id="q" type="search" placeholder="Chercher un appareil, un site, « lent »…" autocomplete="off">
+    </label>
+    <div class="mode" role="group" aria-label="Niveau de lecture">
+      <button id="m-b" aria-pressed="true">Débutant</button>
+      <button id="m-e" aria-pressed="false">Expert</button>
+    </div>
+  </header>
+
+  <div class="work">
+    <aside class="rail">
+      <section class="sec">
+        <h3 class="h"><span id="find-h">À regarder</span><span class="n" id="find-n"></span></h3>
+        <div id="finds"></div>
+      </section>
+      <section class="sec">
+        <h3 class="h"><span>Conversations</span><span class="n" id="conv-n"></span></h3>
+        <div class="chips" role="group" aria-label="Filtre rapide">
+          <button class="chip" data-chip="all" aria-pressed="true">Tout</button>
+          <button class="chip" data-chip="pb" aria-pressed="false">Problèmes</button>
+          <button class="chip" data-chip="enc" aria-pressed="false">Chiffré</button>
+          <button class="chip" data-chip="lan" aria-pressed="false">Réseau local</button>
+        </div>
+        <div id="convs"></div>
+      </section>
+    </aside>
+
+    <main class="center">
+      <div class="map">
+        <svg id="graph" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" aria-label="Carte des échanges"></svg>
+        <div class="legend" id="legend"></div>
+      </div>
+      <section class="trace">
+        <div class="trace-h">
+          <button class="play" id="play" aria-label="Rejouer la capture">
+            <svg width="10" height="12" viewBox="0 0 10 12" id="play-ic"><path d="M1 0.5 9.5 6 1 11.5z"/></svg>
+          </button>
+          <span class="clock" id="clock">0,000 s</span>
+          <h3 class="h" id="trace-h">Activité · paquets par 100 ms</h3>
+          <div class="spacer"></div>
+          <button class="reset" id="reset" hidden>Voir toute la capture</button>
+        </div>
+        <div class="plot" id="plot">
+          <div id="bands"></div>
+          <svg class="bars" id="bars" viewBox="0 0 142 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div id="marks"></div>
+          <div class="head" id="head" hidden></div>
+          <div class="axis" id="axis"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="insp" id="insp" aria-live="polite"></aside>
+  </div>
+</div>
+
+<script>
+(() => {
+const DUR = 14.2, NB = 142;
+const $ = s => document.querySelector(s);
+const nf = (n, d=0) => n.toLocaleString('fr-FR', {minimumFractionDigits:d, maximumFractionDigits:d});
+const fmtInt = n => nf(Math.round(n));
+const fmtBytes = b => b < 1000 ? b + ' o' : b < 1e6 ? nf(b/1000, b<1e4?1:0) + ' Ko' : nf(b/1e6, 1) + ' Mo';
+const fmtT = s => nf(s, 3) + ' s';
+const fmtDelta = s => s < 0.0005 ? '+0' : s < 1 ? '+' + nf(s*1000, s < 0.1 ? 1 : 0) + ' ms' : '+' + nf(s, 2) + ' s';
+const fmtDur = s => s < 1 ? nf(s*1000, 0) + ' ms' : nf(s, 1) + ' s';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- sample capture ---------- */
+const HOSTS = {
+  poste:{label:'Ce poste', ip:'192.168.1.24', x:165, y:220, zone:'lan'},
+  nas:  {label:'NAS', ip:'192.168.1.40', x:80, y:105, zone:'lan'},
+  imp:  {label:'Imprimante', ip:'192.168.1.52', x:85, y:345, zone:'lan'},
+  box:  {label:'Box internet', ip:'192.168.1.1', x:392, y:220, zone:'gw'},
+  dns:  {label:'Résolveur DNS', ip:'1.1.1.1', x:585, y:62, zone:'net'},
+  gh:   {label:'api.github.com', ip:'140.82.121.6', x:615, y:142, zone:'net'},
+  cdn:  {label:'video.cdn-exemple.net', ip:'198.51.100.80', x:615, y:226, zone:'net'},
+  old:  {label:'portail.exemple.org', ip:'198.51.100.23', x:595, y:312, zone:'net'},
+  dev:  {label:'203.0.113.50', ip:'port 8080', x:550, y:390, zone:'net'},
+};
+const PROTO = {
+  TLS:{c:'--p-tls', name:'TLS', b:'Chiffré (TLS)'},
+  QUIC:{c:'--p-tls', s:1, name:'QUIC', b:'Chiffré (QUIC)'},
+  DNS:{c:'--p-dns', name:'DNS', b:'Annuaire (DNS)'},
+  SMB:{c:'--p-smb', name:'SMB2', b:'Partage de fichiers'},
+  TCP:{c:'--p-tcp', name:'TCP', b:'Connexion brute (TCP)'},
+  ARP:{c:'--p-arp', name:'ARP', b:'Voisinage (ARP)'},
+  MDNS:{c:'--p-arp', s:1, name:'mDNS', b:'Annonces locales'},
+};
+const L_TCP = (app, n) => [['Ethernet II',14,'Adresse matérielle'],['IPv4',20,'Adresse IP'],['TCP',32,'Connexion']].concat(app ? [[app,n,'Contenu']] : []);
+const L_UDP = (app, n) => [['Ethernet II',14,'Adresse matérielle'],['IPv4',20,'Adresse IP'],['UDP',8,'Envoi simple'],[app,n,'Contenu']];
+
+const CONVS = [
+{ id:'c2', a:'poste', b:'nas', p:'SMB', port:445, cp:50211, packets:44218, bytes:61.4e6, start:1.102, end:13.903, rtt:'0,9 ms', sev:'warn',
+  tB:'Copie d’un fichier depuis le NAS', tE:'SMB2 · 192.168.1.24:50211 → :445',
+  fB:'Des morceaux se perdent', fE:'406 retransmissions SMB2', fsB:'Copie vers ce poste · 406 renvois', fsE:'0,9 % · 4,88 → 7,10 s', fEv:9, loss:[4.88,7.10],
+  sB:'Ce poste copie un fichier de 61 Mo depuis le NAS. Pendant un peu plus de deux secondes, des morceaux du fichier se perdent en route et le NAS doit les renvoyer : 406 fois. Sur un réseau local, on devrait être proche de zéro, et chaque perte fait chuter la vitesse de copie, comme le creux visible sur la trace.',
+  dB:['Si ce poste est en Wi-Fi, refais la copie en câble pour comparer.','Essaie un autre câble ou un autre port sur la box ou le switch.','Regarde si les pertes reviennent toujours au même moment : un autre appareil sature peut-être le réseau.'],
+  sE:'SMB 3.1.1 sur TCP :445, RTT 0,9 ms. 406 retransmissions (0,9 %) groupées entre 4,88 et 7,10 s, toutes précédées de 3 Dup ACK : pertes réelles dans le sens NAS → poste. Débit moyen 38 Mbit/s, 9 Mbit/s pendant l’épisode. La fenêtre de réception du poste n’est jamais tombée à zéro : le poste ne freine pas.',
+  dE:['Fast retransmit après 3 Dup ACK, aucun RTO : pertes ponctuelles, lien toujours actif.','Aucune retransmission poste → NAS : regarder le lien côté NAS ou le Wi-Fi descendant.','Pertes groupées sur 2,2 s : interférence radio ou duplex mismatch plutôt que congestion durable.'],
+  act:[[1.1,4.88,10],[4.88,7.1,2.4],[7.1,13.9,10]],
+  ev:[
+    {t:1.102,d:'ab',k:'syn',e:'SYN',b:'Bonjour, on peut parler ?',hdr:{sp:50211,dp:445,seq:0,ack:0,f:['SYN'],win:65535,ck:'7c1e',opt:'MSS 1460 · SACK · WS ×64'},L:L_TCP(),
+     eb:'Ce poste propose d’ouvrir une connexion avec le NAS. C’est la première des trois étapes de la « poignée de main » TCP.',ee:'Ouverture active. Options : MSS 1460, SACK autorisé, window scale 6, timestamps. Numéros de séquence affichés en relatif.'},
+    {t:1.1029,d:'ba',k:'syn',e:'SYN, ACK',b:'Oui, je t’écoute',hdr:{sp:445,dp:50211,seq:0,ack:1,f:['SYN','ACK'],win:65160,ck:'a40b',opt:'MSS 1460 · SACK · WS ×128'},L:L_TCP(),
+     eb:'Le NAS accepte en moins d’une milliseconde. C’est normal : il est sur le même réseau, à quelques mètres.',ee:'RTT initial 0,9 ms. Fenêtre annoncée 65 160 × 128.'},
+    {t:1.1031,d:'ab',k:'tcp',e:'ACK',b:'C’est parti',hdr:{sp:50211,dp:445,seq:1,ack:1,f:['ACK'],win:2058,ck:'19f2'},L:L_TCP(),
+     eb:'La connexion est ouverte. Tout ce qui suit passe par ce canal.',ee:'Handshake terminé en 1,1 ms. Fenêtre effective 2 058 × 64 = 131 712 octets.'},
+    {t:1.105,d:'ab',k:'data',e:'SMB2 Negotiate',b:'Quelle version du partage ?',L:L_TCP('SMB2',214),fields:[['Dialectes proposés','2.0.2, 2.1, 3.0, 3.0.2, 3.1.1'],['Signature','activée'],['Chiffrement','AES-128-GCM']],
+     eb:'Ce poste liste les versions du partage de fichiers Windows (SMB) qu’il sait parler.',ee:'Negotiate Request avec contexte de pré-authentification SHA-512 et chiffrement AES-128-GCM proposé.'},
+    {t:1.106,d:'ba',k:'data',e:'Negotiate Response · SMB 3.1.1',b:'La plus récente, SMB 3.1.1',L:L_TCP('SMB2',256),fields:[['Dialecte retenu','3.1.1'],['Taille max lecture','8 Mo'],['Chiffrement','AES-128-GCM']],
+     eb:'Le NAS choisit la version la plus récente. C’est une bonne nouvelle : elle est chiffrée et protégée contre les modifications.',ee:'Dialecte 0x0311. MaxReadSize 8 388 608, ce qui explique les rafales de lecture visibles ensuite.'},
+    {t:1.121,d:'ab',k:'data',e:'SMB2 Read · montage-final.mov',b:'Envoie-moi ce fichier',L:L_TCP('SMB2',113),fields:[['Fichier','\\\\NAS\\Projets\\montage-final.mov'],['Taille','61,4 Mo'],['Bloc demandé','8 Mo']],
+     eb:'Ce poste demande le fichier montage-final.mov, 61,4 Mo, rangé dans le dossier Projets du NAS.',ee:'Read Request, offset 0, longueur 8 388 608, crédits 256. Les requêtes suivantes sont pipelinées.'},
+    {t:1.122,d:'ba',k:'data',e:'Données · 43 790 segments',b:'Le fichier arrive par morceaux',L:L_TCP('SMB2',1448),
+     eb:'Le fichier est découpé en près de 44 000 petits morceaux de 1 448 octets, envoyés à la suite.',ee:'Segments de 1 448 octets (MSS − options timestamps). Débit stable autour de 38 Mbit/s jusqu’à 4,88 s.'},
+    {t:4.881,d:'ba',k:'lost',e:'Seq 18 433 201 · jamais reçu',b:'Un morceau se perd en route',L:L_TCP('SMB2',1448),
+     eb:'Ce morceau n’est jamais arrivé. Trame ne peut pas le voir directement : elle le déduit de la réaction de ce poste juste après.',ee:'Segment absent de la capture, déduit du trou de séquence (18 433 201 → 18 434 649) et des Dup ACK qui suivent. Capture faite sur le poste : la perte a eu lieu entre le NAS et la carte réseau.'},
+    {t:4.8822,d:'ab',k:'dup',e:'Dup ACK ×3 · Ack 18 433 201',b:'Il me manque un morceau !',hdr:{sp:50211,dp:445,seq:1873,ack:18433201,f:['ACK'],win:2058,ck:'e03d',opt:'SACK 18 434 649–18 439 993'},L:L_TCP(),
+     eb:'Ce poste signale trois fois de suite qu’il attend toujours le même morceau, alors que les suivants arrivent.',ee:'Trois ACK identiques avec bloc SACK : le récepteur a les segments suivants, seul 18 433 201 manque. Déclenche le fast retransmit côté NAS.'},
+    {t:4.9031,d:'ba',k:'retx',e:'Retransmission · Seq 18 433 201',b:'Le NAS renvoie le morceau',hdr:{sp:445,dp:50211,seq:18433201,ack:1873,f:['ACK','PSH'],win:501,ck:'5b77'},L:L_TCP('SMB2',1448),
+     eb:'Le NAS renvoie le morceau perdu. Ça a coûté 22 ms, et pendant ce temps il ralentit volontairement ses envois par prudence.',ee:'Fast retransmit 22,1 ms après le segment d’origine. La fenêtre de congestion est réduite (CUBIC, β = 0,7) : d’où le creux de débit sur la trace.'},
+    {t:5.0,d:'ba',k:'gap',e:'405 autres retransmissions jusqu’à 7,10 s',b:'405 autres morceaux renvoyés jusqu’à 7,10 s'},
+    {t:13.902,d:'ab',k:'fin',e:'FIN, ACK',b:'J’ai tout, au revoir',hdr:{sp:50211,dp:445,seq:4129,ack:61402214,f:['FIN','ACK'],win:2058,ck:'c4a1'},L:L_TCP(),
+     eb:'Ce poste a reçu tout le fichier et ferme la connexion proprement.',ee:'Fermeture active côté client après Close SMB2. Aucun segment en attente.'},
+    {t:13.903,d:'ba',k:'fin',e:'FIN, ACK',b:'Au revoir',hdr:{sp:445,dp:50211,seq:61402214,ack:4130,f:['FIN','ACK'],win:501,ck:'0e96'},L:L_TCP(),
+     eb:'Le NAS confirme. La copie est terminée, en 12,8 secondes.',ee:'Fermeture simultanée, pas de TIME_WAIT prolongé côté NAS.'},
+  ]},
+{ id:'c3', a:'poste', b:'dev', p:'TCP', port:8080, cp:51522, packets:6, bytes:360, start:3.201, end:4.730, rtt:'17 ms', sev:'crit',
+  tB:'Connexion refusée sur le port 8080', tE:'TCP · 192.168.1.24 → 203.0.113.50:8080',
+  fB:'Connexion refusée', fE:'TCP RST sur :8080', fsB:'203.0.113.50 · 3 tentatives', fsE:'3 SYN → 3 RST/ACK en 17 ms', fEv:1,
+  sB:'Ce poste a essayé trois fois de joindre le serveur 203.0.113.50 sur la porte 8080. Le serveur répond bien, en 17 ms, mais refuse la connexion à chaque fois : aucun programme n’écoute sur cette porte.',
+  dB:['Vérifie que le service est bien démarré sur le serveur.','Vérifie le numéro de port dans ta configuration : 8080 est souvent confondu avec 8000 ou 8443.','Si un pare-feu protège le serveur, il peut être réglé pour refuser au lieu d’ignorer.'],
+  sE:'3 SYN (:51522, :51523, :51524 → :8080) à 3,201 / 3,712 / 4,713 s, chacun suivi d’un RST/ACK en 17 ms. Port fermé et non filtré : un DROP donnerait des SYN retransmis sans réponse. Back-off applicatif de 0,5 puis 1 s, pas de retransmission TCP.',
+  dE:['TTL reçu 52, cohérent avec l’hôte lui-même (64 − 12 sauts) plutôt qu’un pare-feu proche qui forgerait le RST.','Win 0 et Ack = ISN + 1 : RST standard d’une pile Linux sans socket en écoute.'],
+  act:[[3.2,3.22,1],[3.71,3.73,1],[4.71,4.73,1]],
+  ev:[
+    {t:3.201,d:'ab',k:'syn',e:'SYN',b:'Bonjour, porte 8080 ?',hdr:{sp:51522,dp:8080,seq:0,ack:0,f:['SYN'],win:64240,ck:'d81c',opt:'MSS 1460 · SACK · WS ×128'},L:L_TCP(),
+     eb:'Ce poste frappe à la porte 8080 du serveur. Les portes (ou « ports ») servent à distinguer les services d’une même machine.',ee:'SYN initial, options standard. Port source éphémère 51522.'},
+    {t:3.218,d:'ba',k:'rst',e:'RST, ACK',b:'Il n’y a personne ici',hdr:{sp:8080,dp:51522,seq:0,ack:1,f:['RST','ACK'],win:0,ck:'2f90'},L:L_TCP(),
+     eb:'Le serveur répond tout de suite « il n’y a rien ici ». C’est un refus net, pas un silence : la machine est allumée et joignable, mais rien n’écoute sur la porte 8080.',ee:'RST/ACK en 17,0 ms, Win 0, Ack = ISN + 1. TTL 52.'},
+    {t:3.712,d:'ab',k:'syn',e:'SYN (2e tentative)',b:'Et maintenant ?',hdr:{sp:51523,dp:8080,seq:0,ack:0,f:['SYN'],win:64240,ck:'91e4',opt:'MSS 1460 · SACK · WS ×128'},L:L_TCP(),
+     eb:'Le programme réessaie une demi-seconde plus tard.',ee:'Nouveau port source : retry applicatif, pas retransmission TCP.'},
+    {t:3.729,d:'ba',k:'rst',e:'RST, ACK',b:'Toujours personne',hdr:{sp:8080,dp:51523,seq:0,ack:1,f:['RST','ACK'],win:0,ck:'6a03'},L:L_TCP(),eb:'Même refus.',ee:'Identique, 17,1 ms.'},
+    {t:4.713,d:'ab',k:'syn',e:'SYN (3e tentative)',b:'Dernier essai',hdr:{sp:51524,dp:8080,seq:0,ack:0,f:['SYN'],win:64240,ck:'0bd7',opt:'MSS 1460 · SACK · WS ×128'},L:L_TCP(),eb:'Troisième et dernier essai, une seconde plus tard.',ee:'Back-off ×2.'},
+    {t:4.730,d:'ba',k:'rst',e:'RST, ACK',b:'Refusé',hdr:{sp:8080,dp:51524,seq:0,ack:1,f:['RST','ACK'],win:0,ck:'c35e'},L:L_TCP(),eb:'Le programme abandonne ensuite.',ee:'Aucune autre tentative dans la capture.'},
+  ]},
+{ id:'c6', a:'poste', b:'old', p:'TLS', port:443, cp:52990, packets:24, bytes:18200, start:9.401, end:9.890, rtt:'31 ms', sev:'warn',
+  tB:'Site au chiffrement dépassé', tE:'TLS · 192.168.1.24 → 198.51.100.23:443',
+  fB:'Chiffrement dépassé', fE:'TLS 1.0 négocié', fsB:'portail.exemple.org · TLS 1.0', fsE:'Alert protocol_version (70)', fEv:4,
+  sB:'Ce poste a proposé un chiffrement moderne, mais portail.exemple.org a répondu avec TLS 1.0, une version de 1999 que les navigateurs refusent depuis 2020. Ce poste a donc coupé la connexion. Le problème vient du site, pas de ton ordinateur.',
+  dB:['Préviens le responsable du site : son serveur doit être mis à jour.','Ne désactive pas la protection de ton navigateur pour y accéder.'],
+  sE:'ClientHello avec supported_versions 1.3, 1.2. Le serveur répond ServerHello en 0x0301 (TLS 1.0) avec TLS_RSA_WITH_AES_128_CBC_SHA, sans confidentialité persistante. Le client envoie Alert fatal protocol_version (70) puis FIN. Rien à corriger côté poste.',
+  dE:['Suite RSA sans ECDHE : pas de forward secrecy.','4 tentatives identiques, même résultat : comportement du navigateur, pas un aléa réseau.'],
+  act:[[9.4,9.9,1]],
+  ev:[
+    {t:9.401,d:'ab',k:'syn',e:'SYN',b:'Bonjour, on peut parler ?',hdr:{sp:52990,dp:443,seq:0,ack:0,f:['SYN'],win:64240,ck:'44ab',opt:'MSS 1460 · SACK · WS ×128'},L:L_TCP(),eb:'Ouverture de la connexion vers le site.',ee:'SYN standard.'},
+    {t:9.432,d:'ba',k:'syn',e:'SYN, ACK',b:'Oui',hdr:{sp:443,dp:52990,seq:0,ack:1,f:['SYN','ACK'],win:8192,ck:'b310',opt:'MSS 1380'},L:L_TCP(),eb:'Le serveur accepte, en 31 ms.',ee:'MSS 1380 et fenêtre 8192 sans window scale : pile ancienne.'},
+    {t:9.432,d:'ab',k:'tcp',e:'ACK',b:'C’est parti',hdr:{sp:52990,dp:443,seq:1,ack:1,f:['ACK'],win:502,ck:'7e21'},L:L_TCP(),eb:'Connexion ouverte.',ee:'Handshake terminé.'},
+    {t:9.434,d:'ab',k:'tls',e:'ClientHello · TLS 1.3, 1.2',b:'Voici comment chiffrer',L:L_TCP('TLS',517),fields:[['Versions proposées','TLS 1.3, TLS 1.2'],['SNI','portail.exemple.org'],['Suites','17 proposées']],
+     eb:'Ce poste propose de chiffrer avec les versions modernes, 1.3 ou 1.2.',ee:'supported_versions = {0x0304, 0x0303}. Aucune version antérieure acceptée.'},
+    {t:9.466,d:'ba',k:'warn',e:'ServerHello · TLS 1.0',b:'Moi je ne parle que la 1.0',L:L_TCP('TLS',1380),fields:[['Version','TLS 1.0 (0x0301)'],['Suite','TLS_RSA_WITH_AES_128_CBC_SHA'],['Certificat','portail.exemple.org, expire le 14/01/2027']],
+     eb:'Le serveur ne connaît que TLS 1.0. Cette version a des failles connues : un attaquant bien placé pourrait lire ou modifier les échanges.',ee:'Downgrade imposé par le serveur. Suite à échange de clé RSA, mode CBC (Lucky13, BEAST).'},
+    {t:9.467,d:'ab',k:'rst',e:'Alert · protocol_version',b:'Non merci, je raccroche',L:L_TCP('TLS',7),fields:[['Niveau','fatal (2)'],['Description','protocol_version (70)']],
+     eb:'Ce poste refuse et coupe la connexion. C’est le bon réflexe : il te protège.',ee:'Alert en clair, la négociation n’a pas abouti.'},
+    {t:9.468,d:'ab',k:'fin',e:'FIN, ACK',b:'Au revoir',hdr:{sp:52990,dp:443,seq:525,ack:1381,f:['FIN','ACK'],win:502,ck:'2d0c'},L:L_TCP(),eb:'Fermeture.',ee:'Fermeture active côté client.'},
+  ]},
+{ id:'c4', a:'poste', b:'dns', p:'DNS', port:53, cp:61002, packets:64, bytes:9800, start:0.401, end:12.48, rtt:'18 ms', sev:'warn',
+  tB:'Recherche d’adresses (DNS)', tE:'DNS · 192.168.1.24 → 1.1.1.1:53',
+  fB:'Réponse DNS lente', fE:'Latence DNS max 412 ms', fsB:'412 ms pour le serveur vidéo', fsE:'AAAA video.cdn-exemple.net', fEv:3,
+  sB:'Avant de contacter un site, ce poste demande son adresse à un annuaire, le résolveur DNS. 31 questions sur 32 ont eu leur réponse en moins de 25 ms. Une seule a mis 412 ms : celle du serveur vidéo, qui a donc démarré avec presque une demi-seconde de retard.',
+  dB:['Une lenteur isolée n’est pas grave : le résolveur n’avait sans doute pas la réponse en mémoire.','Si ça se répète souvent, essaie un autre résolveur DNS dans les réglages de la box.'],
+  sE:'32 requêtes UDP :53, médiane 18 ms, p95 24 ms. Une seule à 412 ms (AAAA video.cdn-exemple.net à 4,990 s) : cache miss probable avec récursion vers un serveur faisant autorité lent. Aucun NXDOMAIN, aucune requête sans réponse, pas de bascule TCP.',
+  dE:['TTL de la réponse lente : 30 s, la prochaine résolution sera rapide.','Le premier paquet QUIC vers le CDN part 1 ms après la réponse : le délai est bien entièrement DNS.'],
+  act:[[0.4,0.42,1],[4.99,5.0,1],[5.4,5.41,1],[9.38,9.4,1],[0,12.5,0.12]],
+  ev:[
+    {t:0.401,d:'ab',k:'dns',e:'Query A api.github.com',b:'Quelle est l’adresse de api.github.com ?',L:L_UDP('DNS',36),fields:[['Type','A (IPv4)'],['Nom','api.github.com'],['ID','0x3f1a']],
+     eb:'Ce poste demande l’adresse IP de api.github.com, comme on cherche un numéro dans un annuaire.',ee:'Requête récursive, EDNS0 1232 octets, DO=0.'},
+    {t:0.418,d:'ba',k:'dns',e:'Response A 140.82.121.6 · 17 ms',b:'C’est 140.82.121.6',L:L_UDP('DNS',52),fields:[['Réponse','140.82.121.6'],['TTL','60 s'],['Délai','17 ms']],
+     eb:'L’annuaire répond en 17 ms. C’est rapide.',ee:'NOERROR, 1 réponse, TTL 60.'},
+    {t:4.990,d:'ab',k:'dns',e:'Query AAAA video.cdn-exemple.net',b:'Et celle du serveur vidéo ?',L:L_UDP('DNS',43),fields:[['Type','AAAA (IPv6)'],['Nom','video.cdn-exemple.net'],['ID','0x8c02']],
+     eb:'Même question, pour le serveur qui envoie la vidéo.',ee:'Requête AAAA puis A en parallèle (Happy Eyeballs).'},
+    {t:5.402,d:'ba',k:'slow',e:'Response AAAA · 412 ms',b:'Réponse… 412 ms plus tard',L:L_UDP('DNS',71),fields:[['Réponse','2001:db8:4::80'],['TTL','30 s'],['Délai','412 ms']],
+     eb:'La réponse a mis 412 ms, plus de vingt fois le temps habituel sur ce réseau. Pendant ce temps, la vidéo attendait.',ee:'412,3 ms, soit 23 × la médiane. Pas de retransmission de la requête côté client.'},
+    {t:9.380,d:'ab',k:'dns',e:'Query A portail.exemple.org',b:'Adresse de portail.exemple.org ?',L:L_UDP('DNS',37),fields:[['Type','A (IPv4)'],['Nom','portail.exemple.org']],eb:'Une autre recherche, pour un autre site.',ee:'Requête récursive.'},
+    {t:9.396,d:'ba',k:'dns',e:'Response A 198.51.100.23 · 16 ms',b:'C’est 198.51.100.23',L:L_UDP('DNS',53),fields:[['Réponse','198.51.100.23'],['TTL','3600 s']],eb:'Réponse rapide.',ee:'NOERROR, TTL 3600.'},
+    {t:9.5,d:'ab',k:'gap',e:'26 autres requêtes, toutes < 25 ms',b:'26 autres questions, toutes rapides'},
+  ]},
+{ id:'c1', a:'poste', b:'gh', p:'TLS', port:443, cp:52814, packets:312, bytes:412000, start:0.421, end:6.828, rtt:'26 ms', sev:'ok',
+  tB:'Connexion sécurisée à GitHub', tE:'TLS 1.3 · 192.168.1.24 → 140.82.121.6:443',
+  sB:'Ce poste a ouvert une connexion chiffrée avec api.github.com, envoyé une demande et reçu 412 Ko de réponse. Tout s’est passé normalement : le serveur répond en 26 ms et aucun morceau n’a été perdu.',
+  sE:'TCP :52814 → :443, handshake en 26,1 ms, RTT stable 25–28 ms. TLS 1.3, TLS_AES_128_GCM_SHA256, X25519, ALPN h2. Aucune retransmission, fenêtre jamais saturée. Fermeture propre à 6,83 s.',
+  act:[[0.42,0.62,30],[0.62,6.8,0.6],[6.8,6.83,4]],
+  ev:[
+    {t:0.421,d:'ab',k:'syn',e:'SYN',b:'Bonjour, on peut parler ?',hdr:{sp:52814,dp:443,seq:0,ack:0,f:['SYN'],win:65535,ck:'7a90',opt:'MSS 1460 · SACK · WS ×64'},L:L_TCP(),
+     eb:'Ce poste propose d’ouvrir une connexion. C’est la première des trois étapes de la « poignée de main » TCP.',ee:'SYN, options MSS 1460, SACK, window scale 6, timestamps.'},
+    {t:0.447,d:'ba',k:'syn',e:'SYN, ACK',b:'Oui, je t’écoute',hdr:{sp:443,dp:52814,seq:0,ack:1,f:['SYN','ACK'],win:65535,ck:'01ce',opt:'MSS 1436 · SACK · WS ×1024'},L:L_TCP(),
+     eb:'Le serveur accepte. Le temps entre la question et la réponse, 26 ms, mesure la distance réseau jusqu’à GitHub.',ee:'RTT initial 26,1 ms. MSS 1436 annoncé par le serveur.'},
+    {t:0.447,d:'ab',k:'tcp',e:'ACK',b:'C’est parti',hdr:{sp:52814,dp:443,seq:1,ack:1,f:['ACK'],win:2058,ck:'93b5'},L:L_TCP(),eb:'La connexion est ouverte.',ee:'Handshake terminé.'},
+    {t:0.449,d:'ab',k:'tls',e:'ClientHello',b:'Voici comment chiffrer',L:L_TCP('TLS',517),fields:[['Versions','TLS 1.3, 1.2'],['SNI','api.github.com'],['ALPN','h2, http/1.1'],['Groupes','X25519, P-256']],
+     eb:'Ce poste propose des méthodes de chiffrement et annonce le site qu’il veut joindre. Le nom du site est encore lisible à ce moment-là, la suite ne le sera plus.',ee:'ClientHello 517 o, SNI en clair (pas d’ECH), key share X25519 : handshake en 1 aller-retour.'},
+    {t:0.476,d:'ba',k:'tls',e:'ServerHello + certificat',b:'D’accord, voici ma pièce d’identité',L:L_TCP('TLS',2841),fields:[['Version','TLS 1.3'],['Suite','TLS_AES_128_GCM_SHA256'],['Certificat','*.github.com'],['Valide jusqu’au','05/03/2027']],
+     eb:'Le serveur choisit le chiffrement et prouve son identité avec un certificat. Celui-ci est valide.',ee:'ServerHello en clair, puis EncryptedExtensions, Certificate, CertificateVerify, Finished chiffrés. Certificat déchiffré grâce au fichier de clés fourni.'},
+    {t:0.478,d:'ab',k:'tls',e:'Finished',b:'Chiffrement en place',L:L_TCP('TLS',74),eb:'À partir d’ici, tout est chiffré : on ne voit plus que la taille et le rythme des échanges.',ee:'Client Finished. Clés applicatives dérivées.'},
+    {t:0.481,d:'ab',k:'data',e:'Application Data · GET /repos/…',b:'Ma demande',L:L_TCP('TLS',412),eb:'Ce poste envoie sa demande, chiffrée.',ee:'HTTP/2 HEADERS, 412 o chiffrés.'},
+    {t:0.533,d:'ba',k:'data',e:'Application Data · 284 segments',b:'La réponse, en 284 morceaux',L:L_TCP('TLS',1436),eb:'GitHub renvoie 412 Ko de réponse en 284 morceaux, sans aucune perte.',ee:'284 segments, aucun trou de séquence. Temps jusqu’au premier octet : 52 ms.'},
+    {t:6.802,d:'ab',k:'fin',e:'FIN, ACK',b:'J’ai fini, au revoir',hdr:{sp:52814,dp:443,seq:1934,ack:412004,f:['FIN','ACK'],win:2058,ck:'5f4e'},L:L_TCP(),eb:'Ce poste ferme la connexion.',ee:'Fermeture active après close_notify.'},
+    {t:6.828,d:'ba',k:'fin',e:'FIN, ACK',b:'Au revoir',hdr:{sp:443,dp:52814,seq:412004,ack:1935,f:['FIN','ACK'],win:83,ck:'d22b'},L:L_TCP(),eb:'Le serveur confirme.',ee:'Fermeture propre.'},
+  ]},
+{ id:'c5', a:'poste', b:'cdn', p:'QUIC', port:443, cp:60311, packets:17340, bytes:22.7e6, start:5.403, end:14.2, rtt:'31 ms', sev:'ok',
+  tB:'Lecture d’une vidéo', tE:'QUIC · 192.168.1.24 → 198.51.100.80:443',
+  sB:'Une vidéo est téléchargée depuis un serveur de diffusion. Elle passe par QUIC, un protocole plus récent que TCP, chiffré de bout en bout et pensé pour les connexions qui changent, comme sur mobile.',
+  sE:'QUIC v1 sur UDP :443, handshake en 31 ms, ALPN h3. 22,7 Mo en 8,8 s, environ 20,6 Mbit/s. Les accusés de réception sont chiffrés eux aussi : l’analyse des pertes reste limitée vue du réseau.',
+  act:[[5.43,14.2,6]],
+  ev:[
+    {t:5.403,d:'ab',k:'tls',e:'Initial · ClientHello',b:'Bonjour, chiffrons tout de suite',L:L_UDP('QUIC',1252),fields:[['Version','QUIC v1'],['SNI','video.cdn-exemple.net'],['ALPN','h3']],
+     eb:'Avec QUIC, l’ouverture de la connexion et le chiffrement se font en un seul échange, au lieu de deux.',ee:'Initial 1 252 o (padding anti-amplification), DCID 8 octets.'},
+    {t:5.434,d:'ba',k:'tls',e:'Initial + Handshake',b:'D’accord, c’est sécurisé',L:L_UDP('QUIC',1252),fields:[['Version','TLS 1.3 intégré'],['Certificat','*.cdn-exemple.net']],eb:'Le serveur accepte et prouve son identité.',ee:'ServerHello + Handshake en un datagramme coalescé.'},
+    {t:5.436,d:'ab',k:'tls',e:'Handshake · Finished',b:'C’est bon',L:L_UDP('QUIC',96),eb:'Connexion prête, en 31 ms.',ee:'1-RTT établi.'},
+    {t:5.47,d:'ba',k:'data',e:'1-RTT · 17 330 paquets',b:'La vidéo arrive',L:L_UDP('QUIC',1350),eb:'La vidéo arrive en continu jusqu’à la fin de la capture.',ee:'Paquets 1-RTT de 1 350 o, en-têtes courts protégés.'},
+  ]},
+{ id:'c7', a:'poste', b:'box', p:'ARP', port:null, packets:22, bytes:1300, start:0.2, end:13.6, rtt:'—', sev:'ok',
+  tB:'Qui est la box ?', tE:'ARP · 192.168.1.24 ⇄ 192.168.1.1',
+  sB:'Sur un réseau local, les appareils se repèrent avec une adresse matérielle, l’adresse MAC. Ce poste demande régulièrement « qui a l’adresse 192.168.1.1 ? » et la box répond. C’est normal et attendu.',
+  sE:'11 paires who-has / is-at entre a4:83:e7:2c:91:0f et e4:9e:12:5b:03:a8. Pas de réponse en double ni de changement de MAC : aucun signe d’usurpation ARP.',
+  act:[[0,14.2,1]],
+  ev:[
+    {t:0.2,d:'ab',k:'tcp',e:'Who has 192.168.1.1?',b:'Qui a l’adresse 192.168.1.1 ?',L:[['Ethernet II',14,'Adresse matérielle'],['ARP',28,'Voisinage']],fields:[['Demandeur','a4:83:e7:2c:91:0f'],['Destination','ff:ff:ff:ff:ff:ff (tout le réseau)']],eb:'La question est envoyée à tous les appareils du réseau local.',ee:'Requête broadcast, opcode 1.'},
+    {t:0.2012,d:'ba',k:'tcp',e:'192.168.1.1 is at e4:9e:12:5b:03:a8',b:'C’est moi, la box',L:[['Ethernet II',14,'Adresse matérielle'],['ARP',28,'Voisinage']],fields:[['Réponse','e4:9e:12:5b:03:a8']],eb:'Seule la box répond.',ee:'Réponse unicast, opcode 2, 1,2 ms.'},
+    {t:1,d:'ab',k:'gap',e:'10 autres échanges identiques',b:'Même échange 10 fois, toutes les ~1,3 s'},
+  ]},
+{ id:'c8', a:'imp', b:'poste', p:'MDNS', port:5353, packets:18, bytes:4100, start:0.9, end:12.9, rtt:'—', sev:'ok',
+  tB:'L’imprimante s’annonce', tE:'mDNS · 192.168.1.52 → 224.0.0.251:5353',
+  sB:'L’imprimante annonce régulièrement sa présence pour que les ordinateurs du réseau la trouvent sans réglage. Rien à faire.',
+  sE:'mDNS sur 224.0.0.251:5353. PTR _ipp._tcp.local → Imprimante-Bureau._ipp._tcp.local, SRV port 631, TXT avec pdl=application/pdf.',
+  act:[[0,14.2,1]],
+  ev:[
+    {t:0.9,d:'ab',k:'dns',e:'Announce _ipp._tcp.local',b:'Je suis une imprimante !',L:L_UDP('mDNS',212),fields:[['Service','Imprimante-Bureau._ipp._tcp.local'],['Port','631']],eb:'Message envoyé à tout le réseau local.',ee:'Réponse non sollicitée, cache-flush bit.'},
+    {t:1,d:'ab',k:'gap',e:'8 annonces de plus',b:'8 annonces de plus'},
+  ]},
+];
+const CMAP = Object.fromEntries(CONVS.map(c => [c.id, c]));
+
+/* ---------- activity bins (deterministic) ---------- */
+let seed = 7;
+const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+CONVS.forEach(c => {
+  const w = new Array(NB).fill(0);
+  for (let i = 0; i < NB; i++) {
+    const a = i * 0.1, b = a + 0.1;
+    c.act.forEach(([s, e, d]) => { const o = Math.min(b, e) - Math.max(a, s); if (o > 0) w[i] += d * Math.max(o, 0.02); });
+    if (w[i] > 0) w[i] *= 0.7 + 0.6 * rnd();
+  }
+  const tot = w.reduce((x, y) => x + y, 0) || 1;
+  c.bins = w.map(v => v / tot * c.packets);
+});
+const ORDER = ['c2','c5','c1','c6','c3','c4','c7','c8'];
+const totals = Array.from({length:NB}, (_, i) => CONVS.reduce((s, c) => s + c.bins[i], 0));
+const MAXB = Math.max(...totals);
+
+/* ---------- state ---------- */
+const st = { mode:'b', sel:'c2', ev:9, q:'', chip:'all', t:0, timeMode:false, playing:false };
+try { const m = localStorage.getItem('trame-mode'); if (m === 'e' || m === 'b') st.mode = m; } catch (e) {}
+const B = () => st.mode === 'b';
+
+const hostName = id => HOSTS[id].label;
+const isMatch = c => {
+  if (st.chip === 'pb' && c.sev === 'ok') return false;
+  if (st.chip === 'enc' && !['TLS','QUIC'].includes(c.p)) return false;
+  if (st.chip === 'lan' && HOSTS[c.b].zone === 'net') return false;
+  const q = st.q.trim().toLowerCase();
+  if (!q) return true;
+  const hay = [c.tB, c.tE, PROTO[c.p].name, PROTO[c.p].b, HOSTS[c.a].label, HOSTS[c.a].ip, HOSTS[c.b].label, HOSTS[c.b].ip, c.port, c.sev === 'crit' ? 'problème erreur refus' : '', c.sev === 'warn' ? 'problème lent perte attention' : '', c.fB || '', c.fsB || ''].join(' ').toLowerCase();
+  return q.split(/\s+/).every(w => hay.includes(w));
+};
+const activeAt = (c, t) => c.bins[Math.min(NB - 1, Math.floor(t * 10))] > 0.05;
+
+/* ---------- small renderers ---------- */
+const wire = p => `<span class="wire${PROTO[p].s ? ' striped' : ''}" style="--c:var(${PROTO[p].c})"></span>`;
+const glyph = (sev, size=11) => sev === 'crit'
+  ? `<svg class="glyph" width="${size}" height="${size}" viewBox="0 0 10 10" aria-label="Problème"><path d="M5 0.5 9.5 5 5 9.5 0.5 5z" style="fill:var(--crit)"/></svg>`
+  : sev === 'warn'
+  ? `<svg class="glyph" width="${size}" height="${size}" viewBox="0 0 10 10" aria-label="À surveiller"><path d="M5 0.8 9.6 9.2H0.4z" style="fill:var(--warn)"/></svg>`
+  : `<svg class="glyph" width="${size}" height="${size}" viewBox="0 0 10 10" aria-label="Normal"><circle cx="5" cy="5" r="3.6" style="fill:none;stroke:var(--ink3);stroke-width:1.4"/></svg>`;
+const spark = c => {
+  const n = 40, step = NB / n, vals = [];
+  for (let i = 0; i < n; i++) { let s = 0; for (let j = Math.floor(i*step); j < Math.floor((i+1)*step); j++) s += c.bins[j]; vals.push(s); }
+  const m = Math.max(...vals) || 1;
+  return `<svg class="spark" width="60" height="14" viewBox="0 0 ${n*1.5} 14" aria-hidden="true">${vals.map((v, i) => v > 0 ? `<rect x="${i*1.5}" y="${14 - Math.max(1.2, Math.sqrt(v/m)*14)}" width="1" height="${Math.max(1.2, Math.sqrt(v/m)*14)}" style="fill:var(${PROTO[c.p].c})"/>` : '').join('')}</svg>`;
+};
+
+function renderMeta() {
+  const pk = CONVS.reduce((s, c) => s + c.packets, 0), by = CONVS.reduce((s, c) => s + c.bytes, 0);
+  $('#meta').textContent = `${nf(DUR,1)} s · ${fmtInt(pk)} paquets · ${Object.keys(HOSTS).length} appareils · ${fmtBytes(by)}`;
+}
+
+function renderFinds() {
+  const f = CONVS.filter(c => c.sev !== 'ok').sort((a, b) => (a.sev === 'crit' ? 0 : 1) - (b.sev === 'crit' ? 0 : 1));
+  $('#find-h').textContent = B() ? 'À regarder' : 'Constats';
+  $('#find-n').textContent = f.length;
+  $('#finds').innerHTML = f.map(c => `<button class="find" data-c="${c.id}" aria-current="${st.sel === c.id}">
+    <span class="g">${glyph(c.sev, 12)}</span><span class="t">${esc(B() ? c.fB : c.fE)}</span><span class="s">${esc(B() ? c.fsB : c.fsE)}</span></button>`).join('');
+}
+
+function renderList() {
+  const list = ORDER.map(id => CMAP[id]).filter(isMatch);
+  $('#conv-n').textContent = list.length + ' / ' + CONVS.length;
+  $('#convs').innerHTML = list.length ? list.map(c => {
+    const t = B() ? c.tB : `${HOSTS[c.a].ip} ⇄ ${HOSTS[c.b].ip}`;
+    const s = B() ? `${hostName(c.a)} ⇄ ${hostName(c.b)}` : `${PROTO[c.p].name}${c.port ? ' · :' + c.port : ''} · ${fmtInt(c.packets)} paq.`;
+    return `<button class="conv" data-c="${c.id}" aria-current="${st.sel === c.id}">
+      ${wire(c.p)}
+      <span class="main"><span class="t">${c.sev !== 'ok' ? glyph(c.sev) : ''}${esc(t)}</span><span class="s">${esc(s)}</span></span>
+      <span class="r"><span class="b">${fmtBytes(c.bytes)}</span>${spark(c)}</span></button>`;
+  }).join('') : `<p class="empty">Aucune conversation ne correspond. Essaie « NAS », « 443 » ou « lent ».</p>`;
+}
+
+/* ---------- graph ---------- */
+const BUNDLE = ['c7','c4','c1','c5','c6','c3'];
+function edgeD(c) {
+  const a = HOSTS[c.a], b = HOSTS[c.b], box = HOSTS.box;
+  const i = BUNDLE.indexOf(c.id);
+  if (i >= 0) {
+    const off = (i - (BUNDLE.length - 1) / 2) * 4.2;
+    if (c.b === 'box') return `M${a.x + 10},${a.y + off} L${box.x - 13},${box.y + off}`;
+    return `M${a.x + 10},${a.y + off} L${box.x},${box.y + off} C${box.x + 70},${box.y + off} ${b.x - 110},${b.y} ${b.x - 9},${b.y}`;
+  }
+  const [p, q] = c.a === 'poste' ? [a, b] : [b, a];
+  return `M${p.x},${p.y} Q${(p.x + q.x) / 2 + 30},${(p.y + q.y) / 2} ${q.x},${q.y}`;
+}
+const widthOf = c => 1.4 + Math.max(0, Math.log10(c.bytes) - 3) * 1.15;
+
+function renderGraph() {
+  const g = $('#graph');
+  let s = `<rect class="zone" x="8" y="10" width="322" height="420" rx="2"/>
+    <text class="zlabel" x="22" y="32">RÉSEAU LOCAL</text><text class="zsub" x="22" y="48">192.168.1.0/24</text>
+    <rect class="zone" x="452" y="10" width="340" height="420" rx="2"/>
+    <text class="zlabel" x="466" y="32">INTERNET</text>
+    <line x1="392" y1="22" x2="392" y2="418" style="stroke:var(--rule);stroke-dasharray:2 4"/>
+    <text class="zsub" x="392" y="425" text-anchor="middle">NAT</text>`;
+  ORDER.slice().reverse().forEach(id => {
+    const c = CMAP[id], d = edgeD(c), w = widthOf(c), pr = PROTO[c.p];
+    s += `<path class="halo" data-h="${id}" d="${d}" style="stroke-width:${w + 7}"/>
+      <path class="edge" data-e="${id}" d="${d}" style="stroke:var(${pr.c});stroke-width:${w}${pr.s ? ';stroke-dasharray:6 3.5' : ''}"/>
+      <path class="hit" data-c="${id}" d="${d}"><title>${esc(c.tB)}</title></path>`;
+  });
+  s += `<g id="sevmarks"></g><g id="dots"></g>`;
+  Object.entries(HOSTS).forEach(([id, h]) => {
+    const right = h.zone === 'net', me = id === 'poste', gw = id === 'box';
+    const above = id === 'nas';
+    const lx = right ? h.x + 14 : gw || above ? h.x : h.x + (me ? 0 : 14);
+    const anchor = right ? 'start' : gw || me || above ? 'middle' : 'start';
+    const ly = above ? h.y - 34 : gw || me ? h.y + 32 : h.y + 4;
+    s += `<g class="node${me ? ' me' : ''}" data-n="${id}" tabindex="0" role="button" aria-label="Filtrer sur ${esc(h.label)}">
+      ${gw ? `<rect x="${h.x - 11}" y="${h.y - 11}" width="22" height="22" rx="2"/><path d="M${h.x - 5},${h.y} h10 M${h.x + 2},${h.y - 3} l3,3 -3,3" style="fill:none;stroke:var(--ink);stroke-width:1.4"/>`
+        : me ? `<circle r="12" cx="${h.x}" cy="${h.y}"/><circle class="core" r="5" cx="${h.x}" cy="${h.y}"/>`
+        : `<circle r="7" cx="${h.x}" cy="${h.y}"/>`}
+      <text class="nl" x="${lx}" y="${ly}" text-anchor="${anchor}">${esc(h.label)}</text>
+      <text class="ns" x="${lx}" y="${ly + 14}" text-anchor="${anchor}">${esc(h.ip)}</text></g>`;
+  });
+  g.innerHTML = s;
+  // severity markers placed on the curve itself
+  let m = '';
+  CONVS.filter(c => c.sev !== 'ok').forEach(c => {
+    const p = g.querySelector(`[data-e="${c.id}"]`), L = p.getTotalLength(), pt = p.getPointAtLength(L * (BUNDLE.includes(c.id) ? 0.86 : 0.55));
+    m += c.sev === 'crit'
+      ? `<path d="M${pt.x},${pt.y - 7} l7,7 -7,7 -7,-7z" style="fill:var(--crit);stroke:var(--panel);stroke-width:2"/>`
+      : `<path d="M${pt.x},${pt.y - 7} l7,12 h-14z" style="fill:var(--warn);stroke:var(--panel);stroke-width:2"/>`;
+  });
+  g.querySelector('#sevmarks').innerHTML = m;
+  paintGraph();
+}
+function paintGraph() {
+  CONVS.forEach(c => {
+    const e = document.querySelector(`[data-e="${c.id}"]`), h = document.querySelector(`[data-h="${c.id}"]`);
+    if (!e) return;
+    const off = !isMatch(c), idle = st.timeMode && !activeAt(c, st.t);
+    e.classList.toggle('off', off);
+    e.classList.toggle('idle', !off && idle);
+    e.classList.toggle('dim', !off && !idle && st.sel !== c.id);
+    h.classList.toggle('on', st.sel === c.id);
+  });
+}
+
+function renderLegend() {
+  const items = [['TLS','TLS'],['QUIC','QUIC'],['DNS','DNS'],['SMB','SMB2'],['TCP','TCP'],['ARP','ARP'],['MDNS','mDNS']];
+  $('#legend').innerHTML = items.map(([k, n]) => `<span>${wire(k)}${B() ? esc(PROTO[k].b) : n}</span>`).join('') +
+    `<span><em>${B() ? 'Épaisseur = volume échangé' : 'Couleurs : paires T568B · épaisseur ∝ log(octets)'}</em></span>`;
+}
+
+/* ---------- trace ---------- */
+function renderTrace() {
+  let s = '';
+  for (let i = 0; i < NB; i++) {
+    let y = 100;
+    ORDER.forEach(id => {
+      const c = CMAP[id], v = c.bins[i]; if (v <= 0) return;
+      const h = v / MAXB * 96; if (h < 0.05) return;
+      y -= h;
+      s += `<rect x="${i + 0.08}" y="${y}" width="0.84" height="${h}" style="fill:var(${PROTO[c.p].c})${PROTO[c.p].s ? ';opacity:.6' : ''}"/>`;
+    });
+  }
+  $('#bars').innerHTML = s;
+  let ax = '';
+  for (let t = 0; t <= 14; t += 2) ax += `<span style="left:${t / DUR * 100}%">${t} s</span>`;
+  $('#axis').innerHTML = ax;
+  const c2 = CMAP.c2;
+  $('#bands').innerHTML = `<div class="loss-band" style="left:${c2.loss[0] / DUR * 100}%;width:${(c2.loss[1] - c2.loss[0]) / DUR * 100}%" title="Épisode de pertes"></div>`;
+  $('#marks').innerHTML = CONVS.filter(c => c.sev !== 'ok').map(c => {
+    const t = c.ev[c.fEv].t;
+    return `<button class="mk" style="left:${t / DUR * 100}%" data-c="${c.id}" data-ev="${c.fEv}" aria-label="${esc(c.fB)} à ${fmtT(t)}">${glyph(c.sev, 11)}</button>`;
+  }).join('');
+}
+function paintHead() {
+  $('#head').hidden = !st.timeMode;
+  $('#reset').hidden = !st.timeMode;
+  $('#head').style.left = (st.t / DUR * 100) + '%';
+  $('#clock').textContent = st.timeMode ? fmtT(st.t) : nf(DUR, 1) + ' s';
+}
+$('#trace-h').textContent = 'Activité · paquets par 100 ms';
+
+/* ---------- inspector ---------- */
+const KCOL = {lost:'crit', rst:'crit', retx:'warn', slow:'warn', warn:'warn', dup:'warn', data:'mut', gap:'mut'};
+function renderSeq(c) {
+  const beg = B(), W = 400, xA = 104, xB = 372, top = 52, rh = beg ? 50 : 36;
+  const H = top + c.ev.length * rh + 8, t0 = c.ev[0].t;
+  const a = HOSTS[c.a], b = HOSTS[c.b];
+  let s = `<svg class="seq" viewBox="0 0 ${W} ${H}" aria-label="Déroulé de l’échange"><defs>${['ink','crit','warn','mut'].map(k =>
+    `<marker id="ah-${k}" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0.6 L8,4 L0,7.4z" style="fill:var(--m-${k})"/></marker>`).join('')}</defs>
+    <text class="lane-h" x="${xA}" y="16" text-anchor="middle">${esc(a.label)}</text><text class="lane-s" x="${xA}" y="30" text-anchor="middle">${esc(a.ip)}${c.cp ? ':' + c.cp : ''}</text>
+    <text class="lane-h" x="${W - 2}" y="16" text-anchor="end">${esc(b.label)}</text><text class="lane-s" x="${W - 2}" y="30" text-anchor="end">${esc(b.ip)}${c.port && b.ip.indexOf('port') < 0 ? ':' + c.port : ''}</text>
+    <line class="lane" x1="${xA}" y1="38" x2="${xA}" y2="${H - 4}"/><line class="lane" x1="${xB}" y1="38" x2="${xB}" y2="${H - 4}"/>`;
+  c.ev.forEach((e, i) => {
+    const y = top + i * rh, on = st.ev === i, col = KCOL[e.k] || 'ink';
+    s += `<g class="ev${on ? ' on' : ''}" data-i="${i}" tabindex="0" role="button" aria-pressed="${on}" aria-label="${esc((beg ? e.b : e.e) + ', ' + fmtDelta(e.t - t0))}">
+      <rect class="bg" x="0" y="${y - 6}" width="${W}" height="${rh}" rx="2"/>`;
+    if (e.k === 'gap') {
+      s += `<text class="gap" x="${(xA + xB) / 2}" y="${y + rh / 2 - 2}" text-anchor="middle">⋯ ${esc(beg ? e.b : e.e)}</text></g>`;
+      return;
+    }
+    const x1 = e.d === 'ab' ? xA : xB, x2 = e.d === 'ab' ? xB : xA;
+    const y1 = y + (beg ? 20 : 15), y2 = y1 + 9;
+    s += `<text class="dt" x="4" y="${y1 + 4}">${fmtDelta(e.t - t0)}</text>`;
+    const lx = (xA + xB) / 2;
+    s += `<text class="lb${beg ? '' : ' m'}" x="${lx}" y="${y1 - 6}" text-anchor="middle" style="fill:var(--m-${col === 'mut' ? 'ink' : col})">${esc(beg ? e.b : e.e)}</text>`;
+    if (e.k === 'lost') {
+      const xe = x1 + (x2 - x1) * 0.58, ye = y1 + (y2 - y1) * 0.58;
+      s += `<line x1="${x1}" y1="${y1}" x2="${xe}" y2="${ye}" style="stroke:var(--crit);stroke-width:1.4;stroke-dasharray:4 3"/>
+        <path d="M${xe - 5},${ye - 5} l10,10 m0,-10 l-10,10" style="stroke:var(--crit);stroke-width:1.8"/>`;
+    } else {
+      const dash = e.k === 'retx' || e.k === 'dup' ? ';stroke-dasharray:5 3' : '';
+      s += `<line x1="${x1}" y1="${y1}" x2="${x2 + (x2 > x1 ? -1 : 1)}" y2="${y2}" marker-end="url(#ah-${col})" style="stroke:var(--m-${col});stroke-width:${e.k === 'data' ? 1.2 : 1.5}${dash}"/>`;
+    }
+    if (beg) s += `<text class="tt" x="${lx}" y="${y2 + 13}" text-anchor="middle">${esc(e.e)}</text>`;
+    s += `</g>`;
+  });
+  return s + `</svg>`;
+}
+const PORTN = {443:'HTTPS', 445:'partage de fichiers', 8080:'web alternatif', 53:'DNS', 5353:'annonces locales'};
+function bitGrid(h) {
+  const FL = ['CWR','ECE','URG','ACK','PSH','RST','SYN','FIN'];
+  const off = h.opt ? 8 : 5;
+  const cell = (lab, val, span, cls='') => `<div class="${cls}" style="grid-column:span ${span}"><small>${lab}</small><span>${val}</span></div>`;
+  let r = '';
+  for (let i = 0; i < 32; i++) r += `<span class="${i % 8 === 0 ? 'k' : ''}">${i % 8 === 0 || i === 31 ? i : ''}</span>`;
+  let g = cell('Port source', h.sp, 16) + cell('Port destination', h.dp, 16) +
+    cell('Numéro de séquence (relatif)', fmtInt(h.seq), 32) + cell('Numéro d’acquittement (relatif)', fmtInt(h.ack), 32) +
+    cell('Offset', off, 4) + cell('Rés.', 0, 4) +
+    FL.map(f => `<div class="flag${h.f.includes(f) ? ' on' : ''}" title="${f}"><small>${f[0]}</small><span>${h.f.includes(f) ? 1 : 0}</span></div>`).join('') +
+    cell('Fenêtre', fmtInt(h.win), 16) + cell('Somme de contrôle', '0x' + h.ck, 16) + cell('Pointeur urgent', 0, 16);
+  if (h.opt) g += cell('Options (12 octets)', esc(h.opt), 32);
+  return `<div class="bitbox"><div class="ruler" aria-hidden="true">${r}</div><div class="bits">${g}</div></div>
+    <p class="bitnote">En-tête TCP, ${off * 4} octets. Drapeaux : C E U A P R S F = ${FL.join(' ')}.</p>`;
+}
+function renderEvent(c) {
+  const e = c.ev[st.ev]; if (!e) return '';
+  const beg = B();
+  let s = `<section class="sec"><h3 class="h"><span>${beg ? 'Ce message' : 'Paquet sélectionné'}</span><span class="n">${fmtT(e.t)}</span></h3>`;
+  if (e.k === 'gap') return s + `<p class="prose">${esc(beg ? e.b : e.e)}.</p></section>`;
+  s += `<p class="prose">${esc(beg ? e.eb || e.b : e.ee || e.e)}</p>`;
+  if (beg) {
+    const facts = [];
+    if (e.hdr) {
+      facts.push(`<span><em>De</em> port ${e.hdr.sp}${PORTN[e.hdr.sp] ? ' (' + PORTN[e.hdr.sp] + ')' : ''}</span>`);
+      facts.push(`<span><em>Vers</em> port ${e.hdr.dp}${PORTN[e.hdr.dp] ? ' (' + PORTN[e.hdr.dp] + ')' : ''}</span>`);
+      facts.push(`<span><em>Terme technique</em> ${esc(e.hdr.f.join(', '))}</span>`);
+    } else facts.push(`<span><em>Terme technique</em> ${esc(e.e)}</span>`);
+    s += `<div class="facts">${facts.join('')}</div>`;
+  }
+  if (e.L) s += `<div class="layers" aria-label="Couches du paquet">${e.L.map((l, i) => `<span class="${i === e.L.length - 1 ? 'top' : ''}"><b>${esc(beg ? l[2] : l[0])}</b><i>${beg ? esc(l[0]) : fmtInt(l[1]) + ' o'}</i></span>`).join('')}</div>`;
+  if (!beg && e.hdr) s += bitGrid(e.hdr);
+  if (e.fields) s += `<dl class="kv">${e.fields.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
+  return s + `</section>`;
+}
+function renderInsp() {
+  const c = CMAP[st.sel], beg = B(), pr = PROTO[c.p];
+  const pill = c.sev === 'crit' ? `<span class="pill crit">${glyph('crit', 10)}Problème</span>` : c.sev === 'warn' ? `<span class="pill warn">${glyph('warn', 10)}À surveiller</span>` : `<span class="pill ok">${glyph('ok', 10)}Normal</span>`;
+  const todo = beg ? c.dB : c.dE;
+  $('#insp').innerHTML = `
+    <div class="ih">
+      <div class="eyebrow">${pill}<span class="proto">${wire(c.p)}${esc(beg ? pr.b : pr.name + (c.port ? ' · :' + c.port : ''))}</span></div>
+      <h2>${esc(beg ? c.tB : c.tE)}</h2>
+      <div class="ends">${esc(HOSTS[c.a].label)} (${esc(HOSTS[c.a].ip)}) ⇄ ${esc(HOSTS[c.b].label)} (${esc(HOSTS[c.b].ip)})</div>
+    </div>
+    <dl class="stats">
+      <div><dt>Paquets</dt><dd>${fmtInt(c.packets)}</dd></div>
+      <div><dt>Volume</dt><dd>${fmtBytes(c.bytes)}</dd></div>
+      <div><dt>Durée</dt><dd>${fmtDur(c.end - c.start)}</dd></div>
+      <div><dt>${beg ? 'Réactivité' : 'RTT'}</dt><dd>${c.rtt}</dd></div>
+    </dl>
+    <section class="sec">
+      <h3 class="h"><span>${beg ? 'Ce qui se passe' : 'Analyse'}</span></h3>
+      <p class="prose">${esc(beg ? c.sB : c.sE)}</p>
+      ${todo ? `<p class="subh">${beg ? 'Que faire' : 'Indices'}</p><ul class="todo">${todo.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+    </section>
+    <section class="sec">
+      <h3 class="h"><span>${beg ? 'L’échange, message par message' : 'Diagramme de séquence'}</span><span class="n">${c.ev.length} étapes</span></h3>
+      <div class="seqwrap">${renderSeq(c)}</div>
+    </section>
+    ${renderEvent(c)}`;
+}
+
+/* ---------- orchestration ---------- */
+function select(id, ev) {
+  const c = CMAP[id];
+  st.sel = id;
+  st.ev = ev != null ? ev : (c.fEv != null ? c.fEv : 0);
+  renderFinds(); renderList(); paintGraph(); renderInsp();
+}
+function renderAll() {
+  document.querySelectorAll('.mode button').forEach(b => b.setAttribute('aria-pressed', String((b.id === 'm-b') === B())));
+  renderMeta(); renderFinds(); renderList(); renderLegend(); renderGraph(); renderTrace(); paintHead(); renderInsp();
+}
+
+document.addEventListener('click', ev => {
+  const t = ev.target.closest('[data-c],[data-i],[data-n],[data-chip]');
+  if (!t) return;
+  if (t.dataset.chip) {
+    st.chip = t.dataset.chip;
+    document.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(b === t)));
+    renderList(); paintGraph(); return;
+  }
+  if (t.dataset.n) {
+    const h = HOSTS[t.dataset.n];
+    st.q = t.dataset.n === 'poste' ? '' : h.ip.indexOf('port') === 0 ? h.label : h.ip;
+    $('#q').value = st.q; renderList(); paintGraph();
+    const first = ORDER.map(i => CMAP[i]).find(isMatch); if (first && t.dataset.n !== 'poste') select(first.id);
+    return;
+  }
+  if (t.dataset.i != null && t.closest('#insp')) { st.ev = +t.dataset.i; renderInsp(); const el = document.querySelector(`.ev[data-i="${st.ev}"]`); el && el.focus({preventScroll:true}); return; }
+  if (t.dataset.c) {
+    const evI = t.dataset.ev != null ? +t.dataset.ev : undefined;
+    if (t.classList.contains('mk')) { st.timeMode = true; st.t = CMAP[t.dataset.c].ev[evI].t; paintHead(); }
+    select(t.dataset.c, evI);
+    if (window.matchMedia('(max-width:1180px)').matches && !t.closest('#graph')) $('#insp').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth', block:'start'});
+  }
+});
+document.addEventListener('keydown', ev => {
+  const t = ev.target;
+  if ((ev.key === 'Enter' || ev.key === ' ') && t.matches && t.matches('.ev,.node')) { ev.preventDefault(); t.dispatchEvent(new MouseEvent('click', {bubbles:true})); return; }
+  if (t.matches && t.matches('input')) return;
+  const c = CMAP[st.sel];
+  if (ev.key === 'ArrowDown' || ev.key === 'j') { st.ev = Math.min(c.ev.length - 1, st.ev + 1); renderInsp(); ev.preventDefault(); }
+  if (ev.key === 'ArrowUp' || ev.key === 'k') { st.ev = Math.max(0, st.ev - 1); renderInsp(); ev.preventDefault(); }
+  if (ev.key === ' ' && !t.matches('button')) { ev.preventDefault(); togglePlay(); }
+});
+$('#q').addEventListener('input', e => { st.q = e.target.value; renderList(); paintGraph(); });
+['m-b','m-e'].forEach(id => $('#' + id).addEventListener('click', () => {
+  st.mode = id === 'm-b' ? 'b' : 'e';
+  try { localStorage.setItem('trame-mode', st.mode); } catch (e) {}
+  renderAll();
+}));
+
+/* playback + scrubbing */
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+let last = 0, dots = [];
+function togglePlay() {
+  st.playing = !st.playing;
+  if (st.playing) { st.timeMode = true; if (st.t >= DUR - 0.05) st.t = 0; last = performance.now(); requestAnimationFrame(tick); }
+  $('#play-ic').innerHTML = st.playing ? '<path d="M1 0.5h3v11H1zM6 0.5h3v11H6z"/>' : '<path d="M1 0.5 9.5 6 1 11.5z"/>';
+  $('#play').setAttribute('aria-label', st.playing ? 'Mettre en pause' : 'Rejouer la capture');
+}
+function tick(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (st.playing) {
+    st.t += dt;
+    if (st.t >= DUR) { st.t = DUR; togglePlay(); }
+    if (!reduce) spawn(dt, now);
+  }
+  paintHead(); paintGraph(); drawDots(now);
+  if (st.playing || dots.length) requestAnimationFrame(tick);
+}
+function spawn(dt, now) {
+  const bi = Math.min(NB - 1, Math.floor(st.t * 10));
+  CONVS.forEach(c => {
+    const v = c.bins[bi]; if (v < 0.05 || !isMatch(c)) return;
+    const rate = Math.min(14, 1.5 + Math.log2(1 + v) * 2.2);
+    if (Math.random() < rate * dt) {
+      const evs = c.ev.filter(e => e.k !== 'gap');
+      const dir = c.id === 'c2' || c.id === 'c5' ? (Math.random() < 0.82 ? 'ba' : 'ab') : evs[Math.floor(Math.random() * evs.length)].d;
+      dots.push({c:c.id, born:now, dur:BUNDLE.includes(c.id) ? 900 : 650, dir, lost: c.id === 'c2' && st.t > 4.88 && st.t < 7.1 && dir === 'ba' && Math.random() < 0.35});
+    }
+  });
+  if (dots.length > 70) dots = dots.slice(-70);
+}
+function drawDots(now) {
+  const g = document.getElementById('dots'); if (!g) return;
+  dots = dots.filter(d => now - d.born < d.dur);
+  let s = '';
+  dots.forEach(d => {
+    const p = document.querySelector(`[data-e="${d.c}"]`), L = p.getTotalLength();
+    let k = (now - d.born) / d.dur; if (d.lost && k > 0.5) return;
+    const a = HOSTS[CMAP[d.c].a];
+    // path always starts at the local side (poste) except for mDNS which starts at the printer side
+    let from0 = d.dir === 'ab'; if (CMAP[d.c].a !== 'poste') from0 = !from0;
+    const pt = p.getPointAtLength(L * (from0 ? k : 1 - k));
+    s += `<circle class="dot" cx="${pt.x}" cy="${pt.y}" r="${d.lost ? 3.2 : 2.6}" style="fill:${d.lost ? 'var(--crit)' : 'var(--ink)'}"/>`;
+  });
+  g.innerHTML = s;
+}
+$('#play').addEventListener('click', togglePlay);
+$('#reset').addEventListener('click', () => { if (st.playing) togglePlay(); st.timeMode = false; dots = []; drawDots(performance.now()); paintHead(); paintGraph(); });
+const plot = $('#plot');
+const seek = e => { const r = plot.getBoundingClientRect(); st.t = Math.max(0, Math.min(DUR, (e.clientX - r.left) / r.width * DUR)); st.timeMode = true; paintHead(); paintGraph(); };
+plot.addEventListener('pointerdown', e => { if (e.target.closest('.mk')) return; plot.setPointerCapture(e.pointerId); seek(e); });
+plot.addEventListener('pointermove', e => { if (plot.hasPointerCapture(e.pointerId)) seek(e); });
+
+renderAll();
+})();
+</script>
