@@ -1,0 +1,13 @@
+[package]
+name = "trame-wasm"
+description = "WebAssembly build of the Trame engine (C ABI, JSON in and out)"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+trame-core = { path = "../core" }
+serde_json.workspace = true

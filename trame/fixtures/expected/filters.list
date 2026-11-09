@@ -1,0 +1,36 @@
+# Display filters: the set of matching frames must equal tshark's
+tcp
+udp
+dns
+arp
+tls
+quic
+http
+mdns
+tcp.port == 443
+ip.addr == 192.168.1.40
+ip.addr == 192.168.0.0/16 && !tcp
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+tcp.flags.reset == 1
+tcp.analysis.flags
+dns.flags.rcode != 0
+dns.qry.name contains "exemple"
+tls.handshake.type == 1
+tcp.len > 1000
+frame.len < 100
+not ip
+udp.port in {53, 5353}
+tls.record.version == 0x0301
+http.authorization
+eth.dst == ff:ff:ff:ff:ff:ff
+ip.ttl == 52
+tcp.window_size_value == 0
+dns.a == 198.51.100.0/24
+tcp.stream == 6 and tcp.len == 0
+tcp.analysis.retransmission
+tcp.analysis.duplicate_ack
+tcp.analysis.lost_segment
+tcp.payload
+http.request.method == "GET"
+smb2
+nbss
