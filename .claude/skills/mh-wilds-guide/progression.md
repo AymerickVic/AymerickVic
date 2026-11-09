@@ -4,7 +4,7 @@ _Dernière mise à jour : 2026-11-07_
 
 ## Situation
 - Plateforme : PS5, jeu en français.
-- Arme : **Arc** (a testé l'idée du Glaive insecte, puis est revenu à l'Arc).
+- Arme : passe à la **Lancecanon** (2026-11-09). Historique : Arc → idée Glaive insecte → Arc → Lancecanon. Fiches Arc et Glaive gardées.
 - Joue sur **GeForce Now** avec une manette FUNLAB Luminex (palettes XR/XL programmables via MR/ML), icônes PS5.
 - Rang de chasseur : **HR 8** (attendu après Zoh Shia).
 - Dernier boss battu : **Zoh Shia** (3-5) → rang inférieur terminé.
