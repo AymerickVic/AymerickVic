@@ -120,7 +120,7 @@ button:focus-visible,input:focus-visible,.ev:focus-visible{outline:2px solid var
 .node:hover circle,.node:hover rect{stroke-width:2.5}
 .nl{font:600 12.5px var(--f-ui);fill:var(--ink)}
 .ns{font:400 10.5px var(--f-mono);fill:var(--ink3)}
-.dot{pointer-events:none}
+.dot,#sevmarks{pointer-events:none}
 
 /* ---------- trace ---------- */
 .trace{background:var(--panel);border-top:1px solid var(--rule);padding:10px 16px 12px}
@@ -224,6 +224,49 @@ dl.kv dd{margin:0;font-family:var(--f-mono);font-size:12.5px;overflow-wrap:anywh
   .stats div:nth-child(2){border-right:0}
   .stats div:nth-child(-n+2){border-bottom:1px solid var(--rule)}
 }
+/* ---------- beginner summary ---------- */
+.story{overflow:auto;min-height:0}
+.story-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,540px);gap:48px;max-width:1220px;margin:0 auto;
+  padding-block:36px 56px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.kicker{font-size:12px;font-weight:600;font-stretch:85%;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);margin:0 0 10px}
+.story h1{font-size:clamp(26px,3.2vw,36px);line-height:1.15;font-weight:650;font-stretch:86%;letter-spacing:-.012em;margin:0 0 12px;text-wrap:balance;max-width:24ch}
+.lede{font-size:16px;line-height:1.55;color:var(--ink2);margin:0 0 32px;max-width:56ch}
+.group{margin:0 0 32px}
+.group .h{margin-bottom:4px}
+.items{list-style:none;margin:0;padding:0}
+.item{border-bottom:1px solid var(--rule)}
+.item-h{display:grid;grid-template-columns:20px minmax(0,1fr) 16px;gap:2px 10px;width:100%;text-align:left;padding:14px 0;align-items:start}
+.item-h .g{padding-top:4px}
+.item-h b{font-size:16.5px;font-weight:600;display:block}
+.item-h span.one{display:block;font-size:14.5px;color:var(--ink2);margin-top:2px}
+.item-h .chev{margin-top:6px;width:12px;height:12px;transition:transform .2s}
+.item[data-open="true"] .chev{transform:rotate(90deg)}
+.item-h:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.item.ok .item-h{padding:10px 0}
+.item.ok .item-h b{font-size:15px;font-weight:500}
+.item-b{padding:0 0 20px 30px}
+.item-b .prose{font-size:15px}
+.more{margin-top:16px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);border-radius:3px;padding:6px 12px;background:var(--panel)}
+.more:hover{border-color:var(--ink)}
+.item-b .seqwrap{margin-top:16px;background:var(--panel);border:1px solid var(--rule);border-radius:3px;padding:8px 8px 4px}
+.item-b .msg{margin-top:12px;padding:12px 14px;border-left:2px solid var(--ink);background:var(--panel)}
+.item-b .msg p{margin:0;font-size:14px}
+.item-b .msg small{display:block;font-size:11px;color:var(--ink3);font-family:var(--f-mono);margin-bottom:4px}
+.story-side{position:sticky;top:24px;align-self:start}
+.story-side .map{background:var(--panel);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.story-side .map svg{flex:none;min-height:0;aspect-ratio:800/440;height:auto}
+.story-side .nl{font-size:17px}
+.story-side .ns,.story-side .zsub{display:none}
+.story-side .zlabel{font-size:15px}
+.item-b svg.seq{max-width:460px}
+.story-side .cap{font-size:13px;color:var(--ink3);margin:10px 2px 0}
+body.beg .search{display:none}
+@media (max-width:900px){
+  .story-in{grid-template-columns:minmax(0,1fr);gap:24px;padding-block:24px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .story-side{position:static;order:-1}
+  .story-main{display:contents}
+  .story-head{order:-2}
+}
 @media (prefers-reduced-motion:reduce){.edge,.halo{transition:none}}
 </style>
 
@@ -256,7 +299,19 @@ dl.kv dd{margin:0;font-family:var(--f-mono);font-size:12.5px;overflow-wrap:anywh
     </div>
   </header>
 
-  <div class="work">
+  <div class="story" id="story" hidden>
+    <div class="story-in">
+      <div class="story-main">
+        <div class="story-head" id="story-head"></div>
+        <div id="story-list"></div>
+      </div>
+      <aside class="story-side" id="story-side">
+        <p class="cap">Qui parle à qui. Clique sur une ligne pour voir la conversation.</p>
+      </aside>
+    </div>
+  </div>
+
+  <div class="work" id="work">
     <aside class="rail">
       <section class="sec">
         <h3 class="h"><span id="find-h">À regarder</span><span class="n" id="find-n"></span></h3>
@@ -321,10 +376,10 @@ const HOSTS = {
   nas:  {label:'NAS', ip:'192.168.1.40', x:80, y:105, zone:'lan'},
   imp:  {label:'Imprimante', ip:'192.168.1.52', x:85, y:345, zone:'lan'},
   box:  {label:'Box internet', ip:'192.168.1.1', x:392, y:220, zone:'gw'},
-  dns:  {label:'Résolveur DNS', ip:'1.1.1.1', x:585, y:62, zone:'net'},
-  gh:   {label:'api.github.com', ip:'140.82.121.6', x:615, y:142, zone:'net'},
-  cdn:  {label:'video.cdn-exemple.net', ip:'198.51.100.80', x:615, y:226, zone:'net'},
-  old:  {label:'portail.exemple.org', ip:'198.51.100.23', x:595, y:312, zone:'net'},
+  dns:  {label:'Résolveur DNS', ip:'1.1.1.1', x:572, y:62, zone:'net'},
+  gh:   {label:'api.github.com', ip:'140.82.121.6', x:592, y:142, zone:'net'},
+  cdn:  {label:'video.cdn-exemple.net', ip:'198.51.100.80', x:582, y:226, zone:'net'},
+  old:  {label:'portail.exemple.org', ip:'198.51.100.23', x:580, y:312, zone:'net'},
   dev:  {label:'203.0.113.50', ip:'port 8080', x:550, y:390, zone:'net'},
 };
 const PROTO = {
@@ -343,7 +398,7 @@ const CONVS = [
 { id:'c2', a:'poste', b:'nas', p:'SMB', port:445, cp:50211, packets:44218, bytes:61.4e6, start:1.102, end:13.903, rtt:'0,9 ms', sev:'warn',
   tB:'Copie d’un fichier depuis le NAS', tE:'SMB2 · 192.168.1.24:50211 → :445',
   fB:'Des morceaux se perdent', fE:'406 retransmissions SMB2', fsB:'Copie vers ce poste · 406 renvois', fsE:'0,9 % · 4,88 → 7,10 s', fEv:9, loss:[4.88,7.10],
-  sB:'Ce poste copie un fichier de 61 Mo depuis le NAS. Pendant un peu plus de deux secondes, des morceaux du fichier se perdent en route et le NAS doit les renvoyer : 406 fois. Sur un réseau local, on devrait être proche de zéro, et chaque perte fait chuter la vitesse de copie, comme le creux visible sur la trace.',
+  sB:'Ce poste copie un fichier de 61 Mo depuis le NAS. Pendant un peu plus de deux secondes, des morceaux du fichier se perdent en route et le NAS doit les renvoyer : 406 fois. Sur un réseau local, on devrait être proche de zéro, et chaque perte fait chuter la vitesse de copie.',
   dB:['Si ce poste est en Wi-Fi, refais la copie en câble pour comparer.','Essaie un autre câble ou un autre port sur la box ou le switch.','Regarde si les pertes reviennent toujours au même moment : un autre appareil sature peut-être le réseau.'],
   sE:'SMB 3.1.1 sur TCP :445, RTT 0,9 ms. 406 retransmissions (0,9 %) groupées entre 4,88 et 7,10 s, toutes précédées de 3 Dup ACK : pertes réelles dans le sens NAS → poste. Débit moyen 38 Mbit/s, 9 Mbit/s pendant l’épisode. La fenêtre de réception du poste n’est jamais tombée à zéro : le poste ne freine pas.',
   dE:['Fast retransmit après 3 Dup ACK, aucun RTO : pertes ponctuelles, lien toujours actif.','Aucune retransmission poste → NAS : regarder le lien côté NAS ou le Wi-Fi descendant.','Pertes groupées sur 2,2 s : interférence radio ou duplex mismatch plutôt que congestion durable.'],
@@ -508,7 +563,8 @@ const totals = Array.from({length:NB}, (_, i) => CONVS.reduce((s, c) => s + c.bi
 const MAXB = Math.max(...totals);
 
 /* ---------- state ---------- */
-const st = { mode:'b', sel:'c2', ev:9, q:'', chip:'all', t:0, timeMode:false, playing:false };
+const st = { mode:'b', open:'c3', seqOpen:false, sel:'c2', ev:9, q:'', chip:'all', t:0, timeMode:false, playing:false };
+st.sel = st.open; st.ev = 1;
 try { const m = localStorage.getItem('trame-mode'); if (m === 'e' || m === 'b') st.mode = m; } catch (e) {}
 const B = () => st.mode === 'b';
 
@@ -736,7 +792,7 @@ function renderEvent(c) {
     } else facts.push(`<span><em>Terme technique</em> ${esc(e.e)}</span>`);
     s += `<div class="facts">${facts.join('')}</div>`;
   }
-  if (e.L) s += `<div class="layers" aria-label="Couches du paquet">${e.L.map((l, i) => `<span class="${i === e.L.length - 1 ? 'top' : ''}"><b>${esc(beg ? l[2] : l[0])}</b><i>${beg ? esc(l[0]) : fmtInt(l[1]) + ' o'}</i></span>`).join('')}</div>`;
+  if (e.L && !beg) s += `<div class="layers" aria-label="Couches du paquet">${e.L.map((l, i) => `<span class="${i === e.L.length - 1 ? 'top' : ''}"><b>${esc(beg ? l[2] : l[0])}</b><i>${beg ? esc(l[0]) : fmtInt(l[1]) + ' o'}</i></span>`).join('')}</div>`;
   if (!beg && e.hdr) s += bitGrid(e.hdr);
   if (e.fields) s += `<dl class="kv">${e.fields.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
   return s + `</section>`;
@@ -769,21 +825,79 @@ function renderInsp() {
     ${renderEvent(c)}`;
 }
 
+/* ---------- beginner summary ---------- */
+const ONE = {
+  c3:'Un serveur refuse la connexion : le service attendu ne tourne pas.',
+  c2:'La copie depuis le NAS a ralenti, des morceaux se sont perdus en route.',
+  c6:'Un site utilise une protection périmée. Le problème vient du site.',
+  c4:'Une recherche d’adresse a pris 412 ms au lieu de 18. Rien de grave.',
+};
+const chev = `<svg class="chev" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 1.5 6.5 5 3 8.5" style="fill:none;stroke:var(--ink2);stroke-width:1.6"/></svg>`;
+function storyItem(c) {
+  const open = st.open === c.id;
+  let body = '';
+  if (open) {
+    body = `<div class="item-b"><p class="prose">${esc(c.sB)}</p>`;
+    if (c.dB) body += `<p class="subh">Que faire</p><ul class="todo">${c.dB.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`;
+    if (st.seqOpen) {
+      const e = c.ev[st.ev] || c.ev[0];
+      body += `<div class="seqwrap">${renderSeq(c)}</div>
+        <div class="msg"><small>${esc(e.e)} · ${fmtT(e.t)}</small><p>${esc(e.eb || e.b)}</p></div>
+        <button class="more" data-seq="0">Masquer l’échange</button>`;
+    } else body += `<button class="more" data-seq="1">Voir l’échange message par message ${chev}</button>`;
+    body += `</div>`;
+  }
+  return `<li class="item${c.sev === 'ok' ? ' ok' : ''}" id="it-${c.id}" data-open="${open}">
+    <button class="item-h" data-open-c="${c.id}" aria-expanded="${open}">
+      <span class="g">${glyph(c.sev, 12)}</span>
+      <span><b>${esc(c.sev === 'ok' ? c.tB : c.fB)}</b>${c.sev === 'ok' ? '' : `<span class="one">${esc(ONE[c.id])}</span>`}</span>
+      ${chev}</button>${body}</li>`;
+}
+function renderStory() {
+  const pb = CONVS.filter(c => c.sev !== 'ok').sort((a, b) => (a.sev === 'crit' ? 0 : 1) - (b.sev === 'crit' ? 0 : 1));
+  const ok = ORDER.map(i => CMAP[i]).filter(c => c.sev === 'ok');
+  $('#story-head').innerHTML = `<p class="kicker">Bilan · ${nf(DUR, 1)} secondes enregistrées</p>
+    <h1>Ton réseau fonctionne, mais ${pb.length} points méritent ton attention.</h1>
+    <p class="lede">Ce poste a échangé avec ${Object.keys(HOSTS).length - 1} appareils et sites. Il a surtout copié un fichier depuis le NAS (61 Mo) et regardé une vidéo (23 Mo).</p>`;
+  $('#story-list').innerHTML = `<section class="group"><h3 class="h"><span>À regarder, le plus important d’abord</span></h3><ul class="items">${pb.map(storyItem).join('')}</ul></section>
+    <section class="group"><h3 class="h"><span>Ce qui fonctionne normalement</span></h3><ul class="items">${ok.map(storyItem).join('')}</ul></section>`;
+}
+function renderDetail() { B() ? renderStory() : renderInsp(); }
+
 /* ---------- orchestration ---------- */
 function select(id, ev) {
   const c = CMAP[id];
   st.sel = id;
   st.ev = ev != null ? ev : (c.fEv != null ? c.fEv : 0);
-  renderFinds(); renderList(); paintGraph(); renderInsp();
+  renderFinds(); renderList(); paintGraph(); renderDetail();
 }
 function renderAll() {
   document.querySelectorAll('.mode button').forEach(b => b.setAttribute('aria-pressed', String((b.id === 'm-b') === B())));
-  renderMeta(); renderFinds(); renderList(); renderLegend(); renderGraph(); renderTrace(); paintHead(); renderInsp();
+  document.body.classList.toggle('beg', B());
+  $('#story').hidden = !B(); $('#work').hidden = B();
+  const map = document.querySelector('.map');
+  if (B()) { if (st.playing) togglePlay(); st.timeMode = false; dots = []; st.q = ''; st.chip = 'all'; $('#q').value = ''; $('#story-side').prepend(map); st.sel = st.open || st.sel; }
+  else document.querySelector('.center').prepend(map);
+  renderMeta(); renderFinds(); renderList(); renderLegend(); renderGraph(); renderTrace(); paintHead(); renderDetail();
 }
 
 document.addEventListener('click', ev => {
-  const t = ev.target.closest('[data-c],[data-i],[data-n],[data-chip]');
+  const t = ev.target.closest('[data-c],[data-i],[data-n],[data-chip],[data-open-c],[data-seq]');
   if (!t) return;
+  if (t.dataset.seq) { st.seqOpen = t.dataset.seq === '1'; renderStory(); return; }
+  if (t.dataset.openC) {
+    const id = t.dataset.openC;
+    st.open = st.open === id ? null : id; st.seqOpen = false;
+    if (st.open) { st.sel = id; st.ev = CMAP[id].fEv != null ? CMAP[id].fEv : 0; }
+    renderStory(); paintGraph(); return;
+  }
+  if (B() && t.dataset.c && t.closest('#graph')) {
+    st.open = st.sel = t.dataset.c; st.seqOpen = false; st.ev = CMAP[st.sel].fEv != null ? CMAP[st.sel].fEv : 0;
+    renderStory(); paintGraph();
+    const it = document.getElementById('it-' + st.sel); it && it.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'});
+    return;
+  }
+  if (B() && t.dataset.n) return;
   if (t.dataset.chip) {
     st.chip = t.dataset.chip;
     document.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(b === t)));
@@ -796,7 +910,7 @@ document.addEventListener('click', ev => {
     const first = ORDER.map(i => CMAP[i]).find(isMatch); if (first && t.dataset.n !== 'poste') select(first.id);
     return;
   }
-  if (t.dataset.i != null && t.closest('#insp')) { st.ev = +t.dataset.i; renderInsp(); const el = document.querySelector(`.ev[data-i="${st.ev}"]`); el && el.focus({preventScroll:true}); return; }
+  if (t.dataset.i != null && t.closest('.seqwrap')) { st.ev = +t.dataset.i; renderDetail(); const el = document.querySelector(`.ev[data-i="${st.ev}"]`); el && el.focus({preventScroll:true}); return; }
   if (t.dataset.c) {
     const evI = t.dataset.ev != null ? +t.dataset.ev : undefined;
     if (t.classList.contains('mk')) { st.timeMode = true; st.t = CMAP[t.dataset.c].ev[evI].t; paintHead(); }
@@ -809,6 +923,7 @@ document.addEventListener('keydown', ev => {
   if ((ev.key === 'Enter' || ev.key === ' ') && t.matches && t.matches('.ev,.node')) { ev.preventDefault(); t.dispatchEvent(new MouseEvent('click', {bubbles:true})); return; }
   if (t.matches && t.matches('input')) return;
   const c = CMAP[st.sel];
+  if (B()) return;
   if (ev.key === 'ArrowDown' || ev.key === 'j') { st.ev = Math.min(c.ev.length - 1, st.ev + 1); renderInsp(); ev.preventDefault(); }
   if (ev.key === 'ArrowUp' || ev.key === 'k') { st.ev = Math.max(0, st.ev - 1); renderInsp(); ev.preventDefault(); }
   if (ev.key === ' ' && !t.matches('button')) { ev.preventDefault(); togglePlay(); }
@@ -816,6 +931,7 @@ document.addEventListener('keydown', ev => {
 $('#q').addEventListener('input', e => { st.q = e.target.value; renderList(); paintGraph(); });
 ['m-b','m-e'].forEach(id => $('#' + id).addEventListener('click', () => {
   st.mode = id === 'm-b' ? 'b' : 'e';
+  if (st.mode === 'e' && st.ev >= CMAP[st.sel].ev.length) st.ev = 0;
   try { localStorage.setItem('trame-mode', st.mode); } catch (e) {}
   renderAll();
 }));
