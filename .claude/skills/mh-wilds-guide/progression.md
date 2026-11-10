@@ -43,3 +43,8 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - Phase 2 (HR 21-40) : Artian Sight I (élément + Affinité ×3) + Ebony G. β tête, Rathalos G. β torse/jambes, Ebony G. α bras, Rathalos G. α taille, Fitness III.
 - Phase 3 (HR 40-100) : Angelbein « Affinité » + Gore β tête/taille/jambes, Arkveld β torse, Arkveld G. β bras, Surge III (matériaux Xu Wu HR). Préparer 2 Angelbein « Attaque » même élément.
 - Final (HR 100+) : Calamitous Angel (focus Élément → Perçante ; Gore Magala's Tyranny + Lord's Soul) + Udra γ tête/torse (AT Nu Udra « Be Cursed, Ye Shadowy Flame »), Gore β bras/taille/jambes, Challenger II.
+
+## NOUVELLE PARTIE (2026-11-10)
+- A recommencé le jeu depuis le début (aime l'aventure). Arme principale : **Fusarbalète lourd**.
+- Exige des réponses vérifiées à 100 %, étape par étape.
+- Progression HBG Game8 (rang inférieur) : HR1-3 Bone Shooter II (munitions Cluster) + Balahara ; HR3-5 Ambush Partbreaker ; HR6-8 G. Veldian Tormentum I (Arkveld Gardien) + G. Ebony/G. Arkveld.
