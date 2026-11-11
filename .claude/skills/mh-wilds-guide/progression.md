@@ -48,3 +48,4 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - A recommencé le jeu depuis le début (aime l'aventure). Arme principale : **Fusarbalète lourd**.
 - Exige des réponses vérifiées à 100 %, étape par étape.
 - Progression HBG Game8 (rang inférieur) : HR1-3 Bone Shooter II (munitions Cluster) + Balahara ; HR3-5 Ambush Partbreaker ; HR6-8 G. Veldian Tormentum I (Arkveld Gardien) + G. Ebony/G. Arkveld.
+- Choix de build final : **HBG polyvalent munitions Perçantes** (Game8 « Gore General-Purpose Pierce HBG », HR50+) : Trembling Hels (Artian Gogma, Paralysie, Element Focus), mods Pierce Ammo Powder + Ignition Mode Upgrade ; set Gore Magala's Tyranny + Lord's Soul. Paire spéciale préférée : Wyvernpiercer + Wyvernblast (utilisera surtout △). Arme Artian = choix possible Wyvernheart ou Wyvernpiercer.
