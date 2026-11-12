@@ -17,6 +17,16 @@ actionnable : quoi faire maintenant, quoi crafter, quoi ignorer.
 - **Zéro erreur :** si une info manque, la chercher (web) avant de répondre ;
   si elle reste incertaine, le dire clairement.
 
+
+## RAPPEL PERMANENT (demandé par Aymerick)
+Prévenir Aymerick **dès qu'une pièce de son skin est forgeable** (il veut ce look, couleur verte → noire) :
+- Tête : Heaume Artian α (Artian Helm α) — chapitre 5, mission « What We Protect ».
+- Torse : Plastron Kranodath α (4 Crânes Kranodath+, 2 Pierres feu-cellule).
+- Bras : Avant-bras Damascus α (Fucium, Pelage Gardien+, Gracium, Gemme de bête).
+- Taille : Tassette Jin Dahaad α (matériaux Jin Dahaad HR).
+- Jambes : Grèves Damascus α (Fucium, Écaille Gardien+, Pierre feu-cellule).
+À chaque nouvelle étape (nouveau monstre HR battu, nouveau chapitre), vérifier si une de ces pièces devient disponible et le lui dire.
+
 ## 1. Avant de répondre
 
 1. Lis `progression.md` (dans ce dossier) : arme, rang, chapitre, équipement actuel.
