@@ -25,6 +25,7 @@ Prévenir Aymerick **dès qu'une pièce de son skin est forgeable** (il veut ce 
 - Bras : Avant-bras Damascus α (Fucium, Pelage Gardien+, Gracium, Gemme de bête).
 - Taille : Tassette Jin Dahaad α (matériaux Jin Dahaad HR).
 - Jambes : Grèves Damascus α (Fucium, Écaille Gardien+, Pierre feu-cellule).
+Déblocages vérifiés : Kranodath HR (Crâne+ dépeçage 75 %) dès maintenant ; Fucium = filons Ruines de Wyveria + Pelage/Écaille Gardien+ = Gardiens HR → Ruines HR à **RC 20** ; Gemme de bête = récompense de quêtes (ex. Flatulence frivole) ; Pierre feu-cellule = Gravios HR (moment à confirmer) ; Jin Dahaad HR = **chapitre 5 après RC 31** ; Heaume Artian α = chapitre 5 « What We Protect ».
 À chaque nouvelle étape (nouveau monstre HR battu, nouveau chapitre), vérifier si une de ces pièces devient disponible et le lui dire.
 
 ## 1. Avant de répondre
