@@ -71,3 +71,4 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - Build Game8 HR 9-20 « Resentment Burst » : **Couleuvrine Quematrice III** (feu, Garde 2, obus Normal ; forge directe 8 000 z : 4 Certificats S, 10 Igniteurs+, 6 Crêtes+ de Quematrice ; joyaux Artillery II + I).
   Armure : Heaume Gypceros β, Cotte Congalala α (déjà forgée), Avant-bras Gypceros β, Tassette Gypceros α, Grèves Congalala β, Talisman d'acharnement.
   Talents : BOUM ! 3 (Artillery), Garde 2, Vendetta 3, Rengainage éclair 3, Vengeance 3, Contre-attaque 1, Intimidation 2, Métabolisme 2, Athlète 1, Bénédiction 1.
+- Couleuvrine Quematrice III **forgée**. Reste l'armure Gypceros (β tête/bras, α taille), Grèves Congalala β, Talisman d'acharnement.
