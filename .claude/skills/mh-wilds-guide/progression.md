@@ -72,3 +72,4 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
   Armure : Heaume Gypceros β, Cotte Congalala α (déjà forgée), Avant-bras Gypceros β, Tassette Gypceros α, Grèves Congalala β, Talisman d'acharnement.
   Talents : BOUM ! 3 (Artillery), Garde 2, Vendetta 3, Rengainage éclair 3, Vengeance 3, Contre-attaque 1, Intimidation 2, Métabolisme 2, Athlète 1, Bénédiction 1.
 - Couleuvrine Quematrice III **forgée**. Reste l'armure Gypceros (β tête/bras, α taille), Grèves Congalala β, Talisman d'acharnement.
+- 2026-11-12 : **RC 24.** Skin : Damascus α (bras/jambes) devient possible (fucium Ruines + Gardien+ HR ; Pierre feu-cellule = Gravios HR). Prochain build Lancecanon (Game8 HR 21-35 « Burst Agitator ») : Artian Cannon I (Dragon, obus Long, Joyau Magazine II + Artillery) ou Albirath Rook II ; Heaume + Avant-bras désastre G β, Cotte + Tassette Blangonga β, Jambières Mizutsune β, Talisman de témérité.
