@@ -63,3 +63,4 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - 2026-11-12 : Yian Kut-Ku HR capturé. Objectif : « Explorer chaque région et monter le RC » → RC 15 (puis Fabius à Suja). Priorité : Congalala HR → Piqûre mortelle II.
 - Piqûre mortelle II : il ne manque que 2 Pelage Conga+ (dépeçage Conga HR 50 %). Armure visée HR 9-20 (FR) : Lunettes Bulaqchi α, Cotte Congalala α, Avant-bras Talioth α, Tassette Balahara α, Grèves Chatacabra β, Talisman d'acharnement (Chain Charm I = Vendetta 1).
 - 2026-11-12 : **Piqûre mortelle II forgée.** À régler : mods Poudre perforante + Chargeur perforant ; joyaux Opener II [2] + Trueshot [1] si dispo. Prochain : armure HR 9-20.
+- Armure HR 9-20 forgée. Reste : Talisman d'acharnement (3 000 z, 3 Cisailles Nerscylla, 4 Griffes Nerscylla+, 6 Griffes Congalala+, 1 Gemme de bête).
