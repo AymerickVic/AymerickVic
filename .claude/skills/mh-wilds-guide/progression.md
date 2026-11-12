@@ -65,3 +65,9 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - 2026-11-12 : **Piqûre mortelle II forgée.** À régler : mods Poudre perforante + Chargeur perforant ; joyaux Opener II [2] + Trueshot [1] si dispo. Prochain : armure HR 9-20.
 - Armure HR 9-20 forgée. Reste : Talisman d'acharnement (3 000 z, 3 Cisailles Nerscylla, 4 Griffes Nerscylla+, 6 Griffes Congalala+, 1 Gemme de bête).
 - Prochain build HBG (Game8 HR 21-35, « Agitated Max Burst ») : Artian Sheller I (débloqué après « Wyvern Sparks and Rose Thorns », ch. 4, Lala Barina trempée, après RC 20 ; mods Poudre perforante + Chargeur perforant) + Ebony G. β tête/taille, Blango β torse, Rathalos G. β bras/jambes, Talisman d'acharnement.
+
+## CHANGEMENT D'ARME (2026-11-12) → LANCECANON
+- Veut un perso « tank ». Passe du fusarbalète lourd à la **Lancecanon** (avait du mal avant : prenait des dégâts, monstres qui fuient → conseils : bloquer, garde parfaite / recharge = garde parfaite, Seikret pour suivre).
+- Build Game8 HR 9-20 « Resentment Burst » : **Couleuvrine Quematrice III** (feu, Garde 2, obus Normal ; forge directe 8 000 z : 4 Certificats S, 10 Igniteurs+, 6 Crêtes+ de Quematrice ; joyaux Artillery II + I).
+  Armure : Heaume Gypceros β, Cotte Congalala α (déjà forgée), Avant-bras Gypceros β, Tassette Gypceros α, Grèves Congalala β, Talisman d'acharnement.
+  Talents : BOUM ! 3 (Artillery), Garde 2, Vendetta 3, Rengainage éclair 3, Vengeance 3, Contre-attaque 1, Intimidation 2, Métabolisme 2, Athlète 1, Bénédiction 1.
