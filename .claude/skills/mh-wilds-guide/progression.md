@@ -80,3 +80,4 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - Lame wyverne « Verde » I (Rathian, poison) **forgée**. Prochaine étape : Lame wyverne « Sang » I (2 Certificats S, 5 Carapaces, 4 Ailes, 1 Moelle de Rathalos HR, 10 000 z).
 - 2026-11-13 : **retour définitif au fusarbalète lourd** (après tests Lancecanon, Volto-hache, Corne, Épée longue). Arme actuelle : Piqûre mortelle II + armure HR 9-20. Suivant : build HR 21-35 (Artian Sheller I).
 - 2026-11-13 : **RC 28.** Skin : Damascus α possible ; Tassette Jin Dahaad α au ch. 5 après RC 31.
+- 2026-11-13 : **RC 32**, chapitre 5 « Omens » (parler à Olivia aux Ruines). Suite : 2 chasses → Nata → « Storm-cold Vortex » (tuer Jin Dahaad) → débloque Tassette Jin Dahaad α (skin) + monstres trempés niveau 2 (pièces Artian rareté 7).
