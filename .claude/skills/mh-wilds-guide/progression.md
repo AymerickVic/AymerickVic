@@ -79,3 +79,4 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - 2026-11-13 : regarde l'**Épée longue**. Build Game8 HR 21-35 : Sabre Artian I ou Lame wyverne Sang I (Rathalos HR, feu, Berserker 3 ; amélioration depuis « Verde » I) ; Heaume/Avant-bras/Grèves Rathalos G β, Cotte/Tassette Blangonga β, Talisman d'esquive II ; Fenêtre d'invulnérabilité 5.
 - Lame wyverne « Verde » I (Rathian, poison) **forgée**. Prochaine étape : Lame wyverne « Sang » I (2 Certificats S, 5 Carapaces, 4 Ailes, 1 Moelle de Rathalos HR, 10 000 z).
 - 2026-11-13 : **retour définitif au fusarbalète lourd** (après tests Lancecanon, Volto-hache, Corne, Épée longue). Arme actuelle : Piqûre mortelle II + armure HR 9-20. Suivant : build HR 21-35 (Artian Sheller I).
+- 2026-11-13 : **RC 28.** Skin : Damascus α possible ; Tassette Jin Dahaad α au ch. 5 après RC 31.
