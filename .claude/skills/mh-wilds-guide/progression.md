@@ -87,3 +87,17 @@ Fiche : https://claude.ai/artifact/Tbj6ALHb5nSZBxsPcnMYj1 (ancienne fiche Glaive
 - Skin : **Grèves Damascus α + Plastron Kranodath α forgés.** Reste : Avant-bras Damascus α (Gracium), Heaume Artian α (Gracium), Tassette Jin Dahaad α (Gemme de glace). Gracium total manquant : 8.
 - 2026-11-14 : veut jouer le **HBG en mode tank (blocage plutôt qu'esquive)**. FR : Guard = **Paladin** (Joyau paladin), Guard Up = **Ultra garde** (Joyau bouclier, il en a 1), Offensive Guard = **Garde offensive** (Joyau gardien). Tirs spéciaux tank : Wyvernpiercer + Wyverncounter. Survie : Halo de guérison, Récupération+, Mangeur rapide, Bénédiction. Garde = △+○ (Game8 : maintenir ; à vérifier en jeu, l'utilisateur pense que c'est un appui).
 - Fin de jeu visée (tank) : Gore General-Purpose Pierce HBG (Game8) + Ultra garde 3 via talisman (mon ajout). Talisman idéal HBG (Game8) : Balistique 3 ou Machine de guerre 3 + Témérité 1, ①W-①A-①A.
+
+## 🎯 OBJECTIF FINAL (RC 100) — HBG TANK (enregistré 2026-11-14)
+Base Game8 « Gore General-Purpose Pierce HBG » + ajout Ultra garde (adaptation perso).
+- Arme : **Hels frémissant** (Trembling Hels, Artian Gogma ; élément Paralysie, Element Focus ; renforts : Attaque +5 ×6, Capacité EX ×2). Joyaux : Guardian/Ironwall [3], Opener/Ironwall [3], Critical III [3]. Mods : Poudre perforante + Amélio mode Combustion. Tirs spéciaux : Wyvernpiercer + Wyverncounter.
+- Armure : Sororal Earrings α (nom FR non trouvé), Cotte Jin Dahaad γ, Avant-bras Rey Dau γ, Braconnière Gore Magala β, Grèves Gore Magala β.
+- Talisman : Talisman de prospérité (Golden Age Charm), ou talisman évalué avec Ultra garde (idéal : emplacement d'arme [3] pour Joyau bouclier III).
+- Talents : Paladin 3, Ultra garde 3 (ajout), Garde offensive 3, Bénédiction 3, Anti-recul 1, Bouchons 2, Témérité 5, Corps et âme 3, Machine de guerre 3, Berserker 3, Premier tir 3, Vendetta 1, Athlète 2, Trompe-la-mort 2, Mangeur rapide 2, Antivirus 3 ; sets : Tyrannie du Gore Magala (Éclipse noire II) + Ténacité (survit à 1 coup mortel).
+- Style : garde 95 % (△+○ / garde auto / garde parfaite), Wyverncounter pour contrer, roulade seulement pour sortir des grosses zones. Option : Fenêtre d'invulnérabilité 2-3 si besoin.
+
+## PARCOURS JUSQU'AU RC 100 (chaque étape prépare le final)
+1. RC 36-40 : Artian Sheller (rareté 7, Paralysie) + Heaume Jin Dahaad α ✅, Avant-bras/Grèves Jin Dahaad β, Cotte/Tassette Arkvulcan β (Arkveld HR). Joyaux de garde (paladin, bouclier, gardien) à collectionner.
+2. RC 40 (« What Lies Ahead ») : trempés niveau 3 → pièces rareté 8 → **Greifen** (Paralysie, base du Hels frémissant).
+3. RC 50+ : build Game8 Gore + Zoh (armure Gore Magala = pièces du final).
+4. RC 100 : battre Gogmazios (« Ghosts Pay No Heed To Tomorrow ») → Gogma Artian → Hels frémissant ; quêtes 9★ → talismans évalués ; armures γ (Jin Dahaad, Rey Dau).
