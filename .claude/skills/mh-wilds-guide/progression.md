@@ -101,3 +101,4 @@ Base Game8 « Gore General-Purpose Pierce HBG » + ajout Ultra garde (adaptation
 2. RC 40 (« What Lies Ahead ») : trempés niveau 3 → pièces rareté 8 → **Greifen** (Paralysie, base du Hels frémissant).
 3. RC 50+ : build Game8 Gore + Zoh (armure Gore Magala = pièces du final).
 4. RC 100 : battre Gogmazios (« Ghosts Pay No Heed To Tomorrow ») → Gogma Artian → Hels frémissant ; quêtes 9★ → talismans évalués ; armures γ (Jin Dahaad, Rey Dau).
+- 2026-11-22 : **RC 42.** Chapitre 6 : « Links in a Chain » (Nata) → « What Lies Ahead » (Arkveld, quête Awaking From a Dream) → débloque trempés niveau 3 (rareté 8 → Greifen) + Arkveld HR (Cotte/Tassette Arkvulcan β). Pièces Artian actuelles : rareté 6 (Disque/Tube Paralysie affinité, Appareil Glace attaque).
